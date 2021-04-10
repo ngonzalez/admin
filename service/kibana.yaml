@@ -6,22 +6,19 @@ metadata:
   namespace: hebe
 spec:
   type: LoadBalancer
-  loadBalancerIP: KIBANA_CLUSTER_IP
+  loadBalancerIP: 0.0.0.0
   selector:
     run: debian-stretch
   ports:
-    - port: 22
-      name: ssh
-      targetPort: 22
-    - port: 80
-      name: nginx
-      targetPort: 8000
-    - port: 4000
-      name: logstash-tcp
-      targetPort: 4000
-    - port: 5044
-      name: logstash-beats
-      targetPort: 5044
-    - port: 12201
-      name: logstash-gelf
-      targetPort: 12201
+  - port: 22
+    name: ssh
+    targetPort: 22
+  - port: 80
+    name: nginx
+    targetPort: 8000
+  - port: 4000
+    name: logstash-tcp
+    targetPort: 4000
+  - port: 5044
+    name: logstash-beats
+    targetPort: 5044

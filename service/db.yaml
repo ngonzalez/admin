@@ -6,19 +6,19 @@ metadata:
   namespace: hebe
 spec:
   type: LoadBalancer
-  loadBalancerIP: DB_CLUSTER_IP
+  loadBalancerIP: 0.0.0.0
   selector:
     run: debian-sid
   ports:
-    - port: 22
-      name: ssh
-      targetPort: 22
-    - port: 5432
-      name: postgresql
-      targetPort: 5432
-    - port: 6379
-      name: redis
-      targetPort: 6379
-    - port: 8983
-      name: solr
-      targetPort: 8983
+  - port: 22
+    name: ssh
+    targetPort: 22
+  - port: 5432
+    name: postgresql
+    targetPort: 5432
+  - port: 6379
+    name: redis
+    targetPort: 6379
+  - port: 8983
+    name: solr
+    targetPort: 8983

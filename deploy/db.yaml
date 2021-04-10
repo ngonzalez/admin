@@ -14,26 +14,26 @@ spec:
         run: debian-sid
     spec:
       volumes:
-        - name: cgroup
-          hostPath:
-            path: /sys/fs/cgroup
-            type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
       containers:
-        - name: debian-sid
-          image: gcr.io/hebe-299715/debian-sid
-          ports:
-            - name: ssh
-              containerPort: 22
-            - name: postgresql
-              containerPort: 5432
-            - name: redis
-              containerPort: 6379
-            - name: solr
-              containerPort: 8983
-          securityContext:
-            privileged: true
-            capabilities:
-              add: ["SYS_ADMIN"]
-          volumeMounts:
-            - name: cgroup
-              mountPath: /sys/fs/cgroup:ro
+      - name: debian-sid
+        image: ngonzalez121/debian-sid
+        ports:
+        - name: ssh
+          containerPort: 22
+        - name: postgresql
+          containerPort: 5432
+        - name: redis
+          containerPort: 6379
+        - name: solr
+          containerPort: 8983
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - name: cgroup
+          mountPath: /sys/fs/cgroup:ro

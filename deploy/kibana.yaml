@@ -20,7 +20,7 @@ spec:
           type: Directory
       containers:
       - name: debian-stretch
-        image: gcr.io/hebe-299715/debian-stretch
+        image: ngonzalez121/debian-stretch
         ports:
         - name: ssh
           containerPort: 22
@@ -28,8 +28,6 @@ spec:
           containerPort: 4000
         - name: logstash-beats
           containerPort: 5044
-        - name: logstash-gelf
-          containerPort: 12201
         - name: nginx
           containerPort: 8000
         securityContext:

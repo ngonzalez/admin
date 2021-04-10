@@ -14,13 +14,13 @@ spec:
         run: debian-sid
     spec:
       volumes:
-      - name: sys
+      - name: cgroup
         hostPath:
-          path: /sys
+          path: /sys/fs/cgroup
           type: Directory
       containers:
       - name: debian-sid
-        image: gcr.io/hebe-299715/debian-sid
+        image: ngonzalez121/debian-sid
         ports:
         - name: ssh
           containerPort: 22
@@ -31,5 +31,5 @@ spec:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
-        - name: sys
-          mountPath: /sys:ro
+        - name: cgroup
+          mountPath: /sys/fs/cgroup:ro
