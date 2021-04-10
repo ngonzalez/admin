@@ -18,7 +18,7 @@ minikube ssh
 ```
 
 #### gcloud
-```
+```shell
 export PROJECT_NAME='project'
 export SERVICE_ACCOUNT='service-account@project.iam.gserviceaccount.com'
 export KEY_FILE="$HOME/.key.json"
