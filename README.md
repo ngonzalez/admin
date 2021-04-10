@@ -16,7 +16,7 @@ minikube tunnel
 ```
 
 ```
-kubectl proxy --port=8080 &
+minikube ssh
 ```
 
 #### gcloud
