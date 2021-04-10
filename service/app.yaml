@@ -6,13 +6,13 @@ metadata:
   namespace: hebe
 spec:
   type: LoadBalancer
-  loadBalancerIP: APP_CLUSTER_IP
+  loadBalancerIP: 0.0.0.0
   selector:
     run: debian-sid
   ports:
-    - port: 22
-      name: ssh
-      targetPort: 22
-    - port: 80
-      name: nginx
-      targetPort: 8000
+  - port: 22
+    name: ssh
+    targetPort: 22
+  - port: 80
+    name: nginx
+    targetPort: 8000
