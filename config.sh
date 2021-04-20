@@ -1,3 +1,3 @@
 # kubernetes
-export NAMESPACE='hebe'
+export NAMESPACE='namespace'
 export CLUSTER_NAME='app'
