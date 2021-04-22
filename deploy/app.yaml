@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app
-  namespace: hebe
+  namespace: enyo
 spec:
   selector:
     matchLabels:
