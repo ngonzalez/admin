@@ -1,3 +1,3 @@
 # kubernetes
-export NAMESPACE='namespace'
+export NAMESPACE='enyo'
 export CLUSTER_NAME='app'
