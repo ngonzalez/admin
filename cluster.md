@@ -6,6 +6,18 @@ brew install minikube
 ```
 
 ```
+minikube config set driver hyperkit
+```
+
+```
+ssh docker@$(minikube ip) -i $HOME/.minikube/machines/minikube/id_rsa -v
+```
+
+```
+minikube start
+```
+
+```
 minikube dashboard
 ```
 
