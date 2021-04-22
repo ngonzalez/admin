@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app
-  namespace: enyo
+  namespace: k8s
 spec:
   selector:
     matchLabels:

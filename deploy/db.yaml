@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: database
-  namespace: enyo
+  namespace: k8s
 spec:
   selector:
     matchLabels:
@@ -28,8 +28,6 @@ spec:
           containerPort: 5432
         - name: redis
           containerPort: 6379
-        - name: solr
-          containerPort: 8983
         securityContext:
           privileged: true
           capabilities:

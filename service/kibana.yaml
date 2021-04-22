@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kibana
-  namespace: enyo
+  namespace: k8s
 spec:
   type: LoadBalancer
   loadBalancerIP: 0.0.0.0
