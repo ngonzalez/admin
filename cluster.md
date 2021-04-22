@@ -11,7 +11,6 @@ minikube config set driver hyperkit
 
 ```
 minikube ssh
-# add ssh key to authorized_keys
 ```
 
 ```
@@ -24,6 +23,10 @@ minikube dashboard
 
 ```
 minikube tunnel
+```
+
+```
+ssh -J docker@$(minikube ip) <USER>@<POD_IP>
 ```
 
 #### gcloud
