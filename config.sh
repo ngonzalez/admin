@@ -1,3 +1,3 @@
 # kubernetes
-export NAMESPACE='namespace'
-export CLUSTER_NAME='cluster'
+export NAMESPACE='k8s'
+export CLUSTER_NAME='db'
