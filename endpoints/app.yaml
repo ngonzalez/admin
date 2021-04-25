@@ -6,7 +6,7 @@ metadata:
   namespace: k8s
 subsets:
   - addresses:
-      - ip: 172.17.0.6
+      - ip: 172.17.0.5
     ports:
       - port: 22
         name: ssh
