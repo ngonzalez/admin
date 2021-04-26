@@ -7,7 +7,6 @@
 kubectl apply -f namespaces/$NAMESPACE.yaml
 kubectl apply -f deploy/$CLUSTER_NAME.yaml
 kubectl apply -f service/$CLUSTER_NAME.yaml
-kubectl apply -f endpoints/$CLUSTER_NAME.yaml
 ```
 
 #### get informations
@@ -16,6 +15,7 @@ kubectl -n $NAMESPACE get deployments -o wide
 kubectl -n $NAMESPACE get nodes -o wide
 kubectl -n $NAMESPACE get pods -o wide
 kubectl -n $NAMESPACE get services -o wide
+kubectl -n $NAMESPACE get endpoints -o wide
 ```
 
 #### detailed informations
