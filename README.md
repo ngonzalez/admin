@@ -8,6 +8,7 @@ kubectl apply -f namespaces/$NAMESPACE.yaml
 kubectl apply -f deploy/$CLUSTER_NAME.yaml
 kubectl apply -f service/$CLUSTER_NAME.yaml
 kubectl apply -f endpoints/$CLUSTER_NAME.yaml
+kubectl apply -f ingress/$CLUSTER_NAME.yaml
 ```
 
 #### get informations
