@@ -7,7 +7,7 @@
 kubectl apply -f namespaces/$NAMESPACE.yaml
 kubectl apply -f deploy/$CLUSTER_NAME.yaml
 kubectl apply -f service/$CLUSTER_NAME.yaml
-kubectl apply -f endpoints/$CLUSTER_NAME.yaml
+kubectl apply -f ingress/$CLUSTER_NAME.yaml
 ```
 
 #### get informations
@@ -16,6 +16,8 @@ kubectl -n $NAMESPACE get deployments -o wide
 kubectl -n $NAMESPACE get nodes -o wide
 kubectl -n $NAMESPACE get pods -o wide
 kubectl -n $NAMESPACE get services -o wide
+kubectl -n $NAMESPACE get endpoints -o wide
+kubectl -n $NAMESPACE get ing -o wide
 ```
 
 #### detailed informations
@@ -24,6 +26,7 @@ kubectl -n $NAMESPACE describe deployments
 kubectl -n $NAMESPACE describe nodes
 kubectl -n $NAMESPACE describe pods
 kubectl -n $NAMESPACE describe services
+kubectl -n $NAMESPACE describe ing
 ```
 
 See also: [cluster.md](https://github.com/ngonzalez/admin/blob/main/cluster.md)
