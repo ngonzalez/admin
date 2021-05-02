@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: app
+  name: app-loadbalancer
   namespace: k8s
 spec:
   type: LoadBalancer
-  loadBalancerIP: 10.110.185.251
+  loadBalancerIP: 10.105.152.164
   selector:
-    run: debian-sid
+    run: app-debian-sid
   ports:
   - port: 22
     name: ssh

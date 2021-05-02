@@ -7,11 +7,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: debian-sid
+      run: app-debian-sid
   template:
     metadata:
       labels:
-        run: debian-sid
+        run: app-debian-sid
     spec:
       volumes:
       - name: cgroup
@@ -19,7 +19,7 @@ spec:
           path: /sys/fs/cgroup
           type: Directory
       containers:
-      - name: debian-sid
+      - name: app-debian-sid
         image: ngonzalez121/debian-sid
         ports:
         - name: ssh
