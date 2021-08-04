@@ -6,7 +6,7 @@ metadata:
   namespace: k8s
 spec:
   type: LoadBalancer
-  loadBalancerIP: 10.96.139.248
+  loadBalancerIP: 10.103.245.21
   selector:
     run: db-debian-sid
   ports:
