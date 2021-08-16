@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: database
+  namespace: k8s
+spec:
+  containers:
+  - name: db-debian-sid
+    image: ngonzalez121/debian-sid
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
