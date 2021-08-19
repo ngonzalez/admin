@@ -26,5 +26,3 @@ kubectl -n $NAMESPACE describe nodes
 kubectl -n $NAMESPACE describe pods
 kubectl -n $NAMESPACE describe services
 ```
-
-See also: [cluster.md](https://github.com/ngonzalez/admin/blob/main/cluster.md)
