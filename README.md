@@ -5,7 +5,6 @@
 #### create namespace, deployment and service
 ```
 kubectl apply -f namespaces/$NAMESPACE.yaml
-kubectl apply -f pods/$CLUSTER_NAME.yaml
 kubectl apply -f deploy/$CLUSTER_NAME.yaml
 kubectl apply -f service/$CLUSTER_NAME.yaml
 ```
