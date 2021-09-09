@@ -33,10 +33,3 @@ spec:
         volumeMounts:
         - name: cgroup
           mountPath: /sys/fs/cgroup:ro
-        resources:
-          requests:
-            memory: "4Gi"
-            cpu: "500m"
-          limits:
-            memory: "8Gi"
-            cpu: "800m"
