@@ -6,14 +6,11 @@ metadata:
   namespace: k8s
 spec:
   type: LoadBalancer
+  externalIPs:
+  - 172.17.0.100
   selector:
     run: app-debian-sid
   ports:
-  - port: 22
-    name: ssh
-    targetPort: 22
   - port: 80
     name: nginx
     targetPort: 8000
-  externalIPs:
-  - 172.17.0.3
