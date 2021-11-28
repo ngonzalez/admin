@@ -18,3 +18,5 @@ spec:
   - port: 6379
     name: redis
     targetPort: 6379
+  externalIPs:
+  - 172.17.0.5
