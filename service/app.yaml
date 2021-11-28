@@ -6,6 +6,8 @@ metadata:
   namespace: k8s
 spec:
   type: LoadBalancer
+  externalIPs:
+  - 192.168.56.101
   selector:
     run: app-debian-sid
   ports:
