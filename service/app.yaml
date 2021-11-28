@@ -11,9 +11,6 @@ spec:
   selector:
     run: app-debian-sid
   ports:
-  - port: 22
-    name: ssh
-    targetPort: 22
   - port: 80
     name: nginx
     targetPort: 8000
