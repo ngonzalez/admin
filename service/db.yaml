@@ -11,9 +11,6 @@ spec:
   selector:
     run: db-debian-sid
   ports:
-  - port: 22
-    name: ssh
-    targetPort: 22
   - port: 5432
     name: postgresql
     targetPort: 5432
