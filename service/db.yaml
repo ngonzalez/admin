@@ -7,7 +7,7 @@ metadata:
 spec:
   type: LoadBalancer
   externalIPs:
-  - 172.17.0.102
+  - 192.168.56.102
   selector:
     run: db-debian-sid
   ports:
