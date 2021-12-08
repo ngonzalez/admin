@@ -12,12 +12,12 @@ kubectl apply -f ingress/$CLUSTER_NAME.yaml
 
 #### get informations
 ```
-kubectl -n $NAMESPACE get deployments -o wide
-kubectl -n $NAMESPACE get nodes -o wide
-kubectl -n $NAMESPACE get pods -o wide
-kubectl -n $NAMESPACE get services -o wide
-kubectl -n $NAMESPACE get endpoints -o wide
-kubectl -n $NAMESPACE get ing -o wide
+kubectl -n $NAMESPACE get deployments -A -o wide
+kubectl -n $NAMESPACE get no -A -o wide
+kubectl -n $NAMESPACE get po -A -o wide
+kubectl -n $NAMESPACE get svc -A -o wide
+kubectl -n $NAMESPACE get endpoints -A -o wide
+kubectl -n $NAMESPACE get ing -A -o wide
 ```
 
 #### detailed informations
