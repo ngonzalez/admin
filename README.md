@@ -12,12 +12,14 @@ kubectl apply -f ingress/$CLUSTER_NAME.yaml
 
 #### get informations
 ```
-kubectl -n $NAMESPACE get deployments -A -o wide
-kubectl -n $NAMESPACE get no -A -o wide
-kubectl -n $NAMESPACE get po -A -o wide
-kubectl -n $NAMESPACE get svc -A -o wide
-kubectl -n $NAMESPACE get endpoints -A -o wide
-kubectl -n $NAMESPACE get ing -A -o wide
+kubectl get configmaps -A -o wide
+kubectl get deployments -A -o wide
+kubectl get daemonsets -A -o wide
+kubectl get no -A -o wide
+kubectl get po -A -o wide
+kubectl get svc -A -o wide
+kubectl get endpoints -A -o wide
+kubectl get ing -A -o wide
 ```
 
 #### detailed informations
@@ -28,3 +30,5 @@ kubectl -n $NAMESPACE describe pods
 kubectl -n $NAMESPACE describe services
 kubectl -n $NAMESPACE describe ing
 ```
+
+kubectl patch svc database-loadbalancer -n k8s -p '{"spec": {"type": "LoadBalancer", "externalIPs":["172.17.0.101"]}}'
