@@ -31,4 +31,6 @@ kubectl -n $NAMESPACE describe services
 kubectl -n $NAMESPACE describe ing
 ```
 
+kubectl patch svc app-loadbalancer -n k8s -p '{"spec": {"type": "LoadBalancer", "externalIPs":["172.17.0.100"]}}'
 kubectl patch svc database-loadbalancer -n k8s -p '{"spec": {"type": "LoadBalancer", "externalIPs":["172.17.0.101"]}}'
+kubectl patch svc nginx-ingress -n nginx-ingress -p '{"spec": {"type": "LoadBalancer", "externalIPs":["172.17.0.102"]}}'
