@@ -31,7 +31,7 @@ kubectl apply -f deploy/db.yaml
 kubectl apply -f service/db.yaml
 ```
 
-#### Gather informations
+#### kubectl get informations
 ```
 kubectl get configmaps -A -o wide
 kubectl get daemonsets -A -o wide
@@ -41,11 +41,4 @@ kubectl get no -A -o wide
 kubectl get po -A -o wide
 kubectl get svc -A -o wide
 kubectl get ing -A -o wide
-```
-
-#### Update services set external IP
-```
-kubectl patch svc app-loadbalancer -n k8s -p '{"spec": {"type": "LoadBalancer", "externalIPs":["172.17.0.100"]}}'
-kubectl patch svc database-loadbalancer -n k8s -p '{"spec": {"type": "LoadBalancer", "externalIPs":["172.17.0.101"]}}'
-kubectl patch svc nginx-ingress -n nginx-ingress -p '{"spec": {"type": "LoadBalancer", "externalIPs":["172.17.0.102"]}}'
 ```
