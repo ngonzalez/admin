@@ -10,5 +10,8 @@ spec:
     run: app-debian-sid
   ports:
   - port: 80
-    name: nginx
+    name: nginx-http
     targetPort: 8000
+  - port: 443
+    name: nginx-https
+    targetPort: 9000
