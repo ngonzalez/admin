@@ -18,9 +18,9 @@ spec:
           service:
             name: app-loadbalancer
             port:
-              number: 80
+              number: 443
   defaultBackend:
     service:
       name: app-loadbalancer
       port:
-        number: 80
+        number: 443
