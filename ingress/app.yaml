@@ -13,7 +13,7 @@ spec:
   tls:
   - hosts:
     - kubernetes.docker.internal
-    secretName: my-tls-secret
+    secretName: k8s-tls-secret
   rules:
   - host: kubernetes.docker.internal
     http:
