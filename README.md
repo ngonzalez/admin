@@ -16,15 +16,14 @@ kubectl apply -f storage/persistent-volume.yaml
 kubectl apply -f storage/persistent-volume-claim.yaml
 ```
 
-⚠️ App cluster
+⚠️ App service
 
 ```
 kubectl apply -f deploy/app.yaml
 kubectl apply -f service/app.yaml
-kubectl apply -f ingress/app.yaml
 ```
 
-⚠️ Db cluster
+⚠️ Db service
 
 ```
 kubectl apply -f deploy/db.yaml
