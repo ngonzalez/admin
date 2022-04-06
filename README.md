@@ -9,28 +9,38 @@
 kubectl apply -f namespaces/k8s.yaml
 ```
 
-⚠️ App service
+⚠️ Database service
 
 ```
-kubectl apply -f deploy/app.yaml
-kubectl apply -f service/app.yaml
+kubectl apply -f deploy/database.yaml
+kubectl apply -f service/database.yaml
 ```
 
-⚠️ Db service
+⚠️ Backend service
 
 ```
-kubectl apply -f deploy/db.yaml
-kubectl apply -f service/db.yaml
+kubectl apply -f deploy/backend.yaml
+kubectl apply -f service/backend.yaml
+```
+
+⚠️ Frontend service
+
+```
+kubectl apply -f deploy/frontend.yaml
+kubectl apply -f service/frontend.yaml
 ```
 
 #### kubectl get informations
+
 ```
 kubectl get configmaps -A -o wide
 kubectl get daemonsets -A -o wide
 kubectl get endpoints -A -o wide
 kubectl get deployments -A -o wide
+```
+
+```
 kubectl get no -A -o wide
 kubectl get po -A -o wide
 kubectl get svc -A -o wide
-kubectl get ing -A -o wide
 ```

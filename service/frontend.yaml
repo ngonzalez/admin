@@ -13,5 +13,5 @@ spec:
     name: nginx-http
     targetPort: 80
   - port: 9000
-    name: nginx-http
+    name: nginx-https
     targetPort: 443
