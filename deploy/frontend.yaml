@@ -13,9 +13,14 @@ spec:
       labels:
         run: frontend
     spec:
+      volumes:
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
       containers:
       - name: frontend
-        image: node:latest
+        image: ngonzalez121/debian-sid
         ports:
         - name: ssh
           containerPort: 22
@@ -27,3 +32,6 @@ spec:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+        volumeMounts:
+        - name: cgroup
+          mountPath: /sys/fs/cgroup:ro
