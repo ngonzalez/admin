@@ -8,6 +8,13 @@
 ```
 kubectl apply -f namespaces/k8s.yaml
 ```
+⚠️ Storage
+
+```
+kubectl apply -f storage/storage-class.yaml
+kubectl apply -f storage/persistent-volume.yaml
+kubectl apply -f storage/persistent-volume-claim.yaml
+```
 
 ⚠️ Database service
 
