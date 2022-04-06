@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: import-loadbalancer
+  namespace: k8s
+spec:
+  type: LoadBalancer
+  selector:
+    run: import
+  ports:
+  - port: 3000
+    name: nginx-http
+    targetPort: 3000
