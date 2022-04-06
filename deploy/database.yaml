@@ -7,11 +7,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: db-debian-sid
+      run: database
   template:
     metadata:
       labels:
-        run: db-debian-sid
+        run: database
     spec:
       volumes:
       - name: cgroup
@@ -19,7 +19,7 @@ spec:
           path: /sys/fs/cgroup
           type: Directory
       containers:
-      - name: db-debian-sid
+      - name: database
         image: ngonzalez121/debian-sid
         ports:
         - name: ssh
