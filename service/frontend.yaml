@@ -9,9 +9,9 @@ spec:
   selector:
     run: frontend
   ports:
-  - port: 8000
+  - port: 80
     name: nginx-http
-    targetPort: 80
-  - port: 9000
+    targetPort: 8000
+  - port: 443
     name: nginx-https
-    targetPort: 443
+    targetPort: 9000
