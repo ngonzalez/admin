@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: app
   namespace: k8s
 spec:
   selector:
     matchLabels:
-      run: backend
+      run: app
   template:
     metadata:
       labels:
-        run: backend
+        run: app
     spec:
       volumes:
       - name: cgroup
@@ -22,7 +22,7 @@ spec:
         persistentVolumeClaim:
           claimName: pv-claim
       containers:
-      - name: backend
+      - name: app
         image: ngonzalez121/debian-sid
         ports:
         - name: ssh

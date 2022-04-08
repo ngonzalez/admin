@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-loadbalancer
+  name: app-loadbalancer
   namespace: k8s
 spec:
   type: LoadBalancer
   selector:
-    run: backend
+    run: app
   ports:
   - port: 80
     name: frontend-https

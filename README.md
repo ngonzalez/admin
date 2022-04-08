@@ -24,18 +24,11 @@ kubectl apply -f deploy/database.yaml
 kubectl apply -f service/database.yaml
 ```
 
-⚠️ Backend service
+⚠️ App service
 
 ```
-kubectl apply -f deploy/backend.yaml
-kubectl apply -f service/backend.yaml
-```
-
-⚠️ Frontend service
-
-```
-kubectl apply -f deploy/frontend.yaml
-kubectl apply -f service/frontend.yaml
+kubectl apply -f deploy/app.yaml
+kubectl apply -f service/app.yaml
 ```
 
 #### kubectl get informations
