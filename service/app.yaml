@@ -10,7 +10,7 @@ spec:
     run: app
   ports:
   - port: 80
-    name: frontend-https
+    name: frontend-http
     targetPort: 80
   - port: 443
     name: frontend-https
