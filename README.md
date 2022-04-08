@@ -8,6 +8,7 @@
 ```
 kubectl apply -f namespaces/k8s.yaml
 ```
+
 ⚠️ Storage
 
 ```
