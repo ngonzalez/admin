@@ -28,9 +28,9 @@ spec:
         - name: ssh
           containerPort: 22
         - name: frontend-http
-          containerPort: 80
+          containerPort: 8000
         - name: frontend-https
-          containerPort: 443
+          containerPort: 9000
         - name: backend-https
           containerPort: 9090
         securityContext:
