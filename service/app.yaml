@@ -11,10 +11,10 @@ spec:
   ports:
   - port: 80
     name: frontend-http
-    targetPort: 80
+    targetPort: 8000
   - port: 443
     name: frontend-https
-    targetPort: 443
+    targetPort: 9000
   - port: 9090
     name: backend-https
     targetPort: 9090
