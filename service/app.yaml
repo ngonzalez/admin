@@ -15,6 +15,9 @@ spec:
   - port: 443
     name: frontend-https
     targetPort: 9000
+  - port: 3000
+    name: stream-https
+    targetPort: 3000
   - port: 9090
     name: backend-https
     targetPort: 9090
