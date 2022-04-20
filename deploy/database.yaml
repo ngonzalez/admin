@@ -14,10 +14,9 @@ spec:
         run: database
     spec:
       volumes:
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
+      - name: data
+        persistentVolumeClaim:
+          claimName: pv-claim
       containers:
       - name: database
         image: ngonzalez121/debian-sid
@@ -33,5 +32,5 @@ spec:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
-        - name: cgroup
-          mountPath: /sys/fs/cgroup:ro
+        - name: data
+          mountPath: /data
