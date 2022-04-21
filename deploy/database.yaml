@@ -13,11 +13,6 @@ spec:
       labels:
         run: database
     spec:
-      volumes:
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       containers:
       - name: database
         image: ngonzalez121/debian-sid
@@ -32,6 +27,3 @@ spec:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - name: cgroup
-          mountPath: /sys/fs/cgroup:ro
