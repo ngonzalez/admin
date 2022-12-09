@@ -9,6 +9,12 @@
 kubectl apply -f namespaces/k8s.yaml
 ```
 
+⚠️ Coredns
+
+```
+kubectl apply -f configmap/coredns.yaml
+```
+
 ⚠️ Storage
 
 ```
