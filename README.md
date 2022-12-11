@@ -37,6 +37,19 @@ kubectl apply -f deploy/app.yaml
 kubectl apply -f service/app.yaml
 ```
 
+⚠️ Admin user
+
+```
+kubectl apply -f service-account/admin-user.yaml
+kubectl apply -f service-account/cluster-admin.yaml
+```
+
+⚠️ Generate token
+
+```
+kubectl -n kubernetes-dashboard create token admin-user
+```
+
 #### kubectl get informations
 
 ```
