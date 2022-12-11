@@ -28,18 +28,15 @@ kubectl -n kubernetes-dashboard create token admin-user
 kubectl apply -f namespace/development.yaml
 ```
 
-⚠️ Deployment
+⚠️ Admin user
 
-```shell
-kubectl apply -f deploy/demodb.yaml
-kubectl apply -f deploy/demoredis.yaml
-kubectl apply -f deploy/demoappbackend.yaml
+```
+kubectl apply -f service-account/admin-user.yaml
+kubectl apply -f service-account/cluster-admin.yaml
 ```
 
-⚠️ Service
+⚠️ Generate token
 
-```shell
-kubectl apply -f service/demodb.yaml
-kubectl apply -f service/demoredis.yaml
-kubectl apply -f service/demoappbackend.yaml
+```
+kubectl -n kubernetes-dashboard create token admin-user
 ```
