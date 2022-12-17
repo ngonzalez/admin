@@ -9,7 +9,7 @@ spec:
   selector:
     run: elastic
   ports:
-  - port: 80
+  - port: 8000
     name: nginx
     targetPort: 8000
   - port: 4000
