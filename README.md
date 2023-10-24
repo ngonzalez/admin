@@ -3,38 +3,10 @@
 
 #### create namespace, deployment and service
 
-⚠️ Common
-
-```
-kubectl apply -f namespaces/k8s.yaml
-```
-
 ⚠️ Coredns
 
 ```
 kubectl apply -f configmap/coredns.yaml
-```
-
-⚠️ Storage
-
-```
-kubectl apply -f storage/storage-class.yaml
-kubectl apply -f storage/persistent-volume.yaml
-kubectl apply -f storage/persistent-volume-claim.yaml
-```
-
-⚠️ Database service
-
-```
-kubectl apply -f deploy/database.yaml
-kubectl apply -f service/database.yaml
-```
-
-⚠️ App service
-
-```
-kubectl apply -f deploy/app.yaml
-kubectl apply -f service/app.yaml
 ```
 
 ⚠️ Admin user
@@ -48,19 +20,4 @@ kubectl apply -f service-account/cluster-admin.yaml
 
 ```
 kubectl -n kubernetes-dashboard create token admin-user
-```
-
-#### kubectl get informations
-
-```
-kubectl get configmaps -A -o wide
-kubectl get daemonsets -A -o wide
-kubectl get endpoints -A -o wide
-kubectl get deployments -A -o wide
-```
-
-```
-kubectl get no -A -o wide
-kubectl get po -A -o wide
-kubectl get svc -A -o wide
 ```
