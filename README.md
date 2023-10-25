@@ -5,19 +5,39 @@
 
 ⚠️ Coredns
 
-```
+```shell
 kubectl apply -f configmap/coredns.yaml
 ```
 
 ⚠️ Admin user
 
-```
+```shell
 kubectl apply -f service-account/admin-user.yaml
 kubectl apply -f service-account/cluster-admin.yaml
 ```
 
 ⚠️ Generate token
 
-```
+```shell
 kubectl -n kubernetes-dashboard create token admin-user
+```
+
+⚠️ Namespace
+
+```shell
+kubectl apply -f namespace/development.yaml
+```
+
+⚠️ Deployment
+
+```shell
+kubectl apply -f deploy/demodb.yaml
+kubectl apply -f deploy/demoredis.yaml
+```
+
+⚠️ Service
+
+```shell
+kubectl apply -f service/demodb.yaml
+kubectl apply -f service/demoredis.yaml
 ```
