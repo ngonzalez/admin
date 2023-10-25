@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoredis
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      run: demoredis
+  template:
+    metadata:
+      labels:
+        run: demoredis
+    spec:
+      containers:
+      - name: demoredis
+        image: ngonzalez121/demoredis
+        ports:
+        - name: redis
+          containerPort: 6379
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+        searches:
+          - link12.ddns.net
+        options:
+          - name: ndots
+            value: "2"
+          - name: eth0
