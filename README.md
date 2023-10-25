@@ -33,6 +33,7 @@ kubectl apply -f namespace/development.yaml
 ```shell
 kubectl apply -f deploy/demodb.yaml
 kubectl apply -f deploy/demoredis.yaml
+kubectl apply -f deploy/demoappbackend.yaml
 ```
 
 ⚠️ Service
@@ -40,4 +41,5 @@ kubectl apply -f deploy/demoredis.yaml
 ```shell
 kubectl apply -f service/demodb.yaml
 kubectl apply -f service/demoredis.yaml
+kubectl apply -f service/demoappbackend.yaml
 ```
