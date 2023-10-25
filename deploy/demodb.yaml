@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demodb
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      run: demodb
+  template:
+    metadata:
+      labels:
+        run: demodb
+    spec:
+      containers:
+      - name: demodb
+        image: ngonzalez121/demodb
+        ports:
+        - name: postgresql
+          containerPort: 5432
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+        searches:
+          - link12.ddns.net
+        options:
+          - name: ndots
+            value: "2"
+          - name: eth0
