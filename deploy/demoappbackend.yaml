@@ -40,6 +40,8 @@ spec:
         - name: config
           mountPath: /tmp/secrets/
           readOnly: true
+      imagePullSecrets:
+      - name: demoappbackend-env
       dnsConfig:
         nameservers:
           - 8.8.8.8
