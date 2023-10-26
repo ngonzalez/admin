@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demonginxbackend
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      run: demonginxbackend
+  template:
+    metadata:
+      labels:
+        run: demonginxbackend
+    spec:
+      containers:
+      - name: demonginxbackend
+        image: ngonzalez121/demonginxbackend
+        ports:
+        - name: nginx
+          containerPort: 9090
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+        searches:
+          - link12.ddns.net
+        options:
+          - name: ndots
+            value: "2"
+          - name: eth0

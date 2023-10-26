@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demonginxbackend
+  namespace: development
+spec:
+  type: LoadBalancer
+  selector:
+    run: demonginxbackend
+  ports:
+  - port: 9090
+    name: nginx
+    targetPort: 9090
