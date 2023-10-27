@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoappstream
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      run: demoappstream
+  template:
+    metadata:
+      labels:
+        run: demoappstream
+    spec:
+      volumes:
+      - name: config
+        secret:
+          secretName: demoappbackend-env
+      containers:
+      - name: demoappstream
+        image: ngonzalez121/demoappstream
+        ports:
+        - name: puma
+          containerPort: 3000
+          hostPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /_health
+            port: 3000
+          initialDelaySeconds: 3
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /_health
+            port: 3000
+          initialDelaySeconds: 3
+          timeoutSeconds: 1
+        volumeMounts:
+        - name: config
+          mountPath: /tmp/secrets/
+          readOnly: true
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+        searches:
+          - link12.ddns.net
+        options:
+          - name: ndots
+            value: "2"
+          - name: eth0
