@@ -39,10 +39,6 @@ spec:
             port: 5000
           initialDelaySeconds: 3
           timeoutSeconds: 1
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
         volumeMounts:
         - name: config
           mountPath: /tmp/secrets/
