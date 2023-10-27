@@ -9,6 +9,6 @@ spec:
   selector:
     run: demoappstream
   ports:
-  - port: 3000
+  - port: 5000
     name: puma
-    targetPort: 3000
+    targetPort: 5000
