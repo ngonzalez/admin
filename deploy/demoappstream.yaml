@@ -14,6 +14,9 @@ spec:
         run: demoappstream
     spec:
       volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: pv-claim
       - name: config
         secret:
           secretName: demoappbackend-env
@@ -36,10 +39,16 @@ spec:
             port: 5000
           initialDelaySeconds: 3
           timeoutSeconds: 1
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
         volumeMounts:
         - name: config
           mountPath: /tmp/secrets/
           readOnly: true
+        - name: data
+          mountPath: /data
       dnsConfig:
         nameservers:
           - 8.8.8.8
