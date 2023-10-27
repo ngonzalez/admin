@@ -1,0 +1,11 @@
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: local-storage
+  namespace: development
+provisioner: kubernetes.io/no-provisioner
+allowVolumeExpansion: true
+mountOptions:
+  - debug
+volumeBindingMode: WaitForFirstConsumer
