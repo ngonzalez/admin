@@ -14,12 +14,12 @@ spec:
         run: demoappstream
     spec:
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: pv-claim
       - name: config
         secret:
           secretName: demoappbackend-env
+      - name: data
+        persistentVolumeClaim:
+          claimName: pv-claim
       containers:
       - name: demoappstream
         image: ngonzalez121/demoappstream
