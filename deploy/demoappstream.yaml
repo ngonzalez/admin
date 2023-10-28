@@ -14,6 +14,9 @@ spec:
         run: demoappstream
     spec:
       volumes:
+      - name: data
+        hostPath:
+          path: /data
       - name: config
         secret:
           secretName: demoappstream-env
@@ -40,6 +43,8 @@ spec:
         - name: config
           mountPath: /tmp/secrets/
           readOnly: true
+        - name: data
+          mountPath: /data
       dnsConfig:
         nameservers:
           - 8.8.8.8
