@@ -16,7 +16,7 @@ spec:
       volumes:
       - name: config
         secret:
-          secretName: demoappbackend-env
+          secretName: demoappstream-env
       - name: data
         persistentVolumeClaim:
           claimName: pv-claim
