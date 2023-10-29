@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demodb
+  name: demopostgresql
   namespace: development
 spec:
   selector:
     matchLabels:
-      run: demodb
+      run: demopostgresql
   template:
     metadata:
       labels:
-        run: demodb
+        run: demopostgresql
     spec:
       containers:
-      - name: demodb
-        image: ngonzalez121/demodb
+      - name: demopostgresql
+        image: ngonzalez121/demopostgresql
         ports:
         - name: postgresql
           containerPort: 5432

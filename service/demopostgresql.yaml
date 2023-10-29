@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: demodb-loadbalancer
+  name: demopostgresql-loadbalancer
   namespace: development
 spec:
   type: LoadBalancer
   selector:
-    run: demodb
+    run: demopostgresql
   ports:
   - port: 5432
     name: postgresql
