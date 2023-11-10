@@ -21,11 +21,17 @@ spec:
       - name: demonginxstream
         image: ngonzalez121/demonginxstream
         ports:
+<<<<<<< Updated upstream
         - name: http
           containerPort: 80
         - name: https
           containerPort: 443
           hostPort: 443
+=======
+        - name: https
+          containerPort: 5050
+          hostPort: 5050
+>>>>>>> Stashed changes
         volumeMounts:
         - name: data
           mountPath: /data
