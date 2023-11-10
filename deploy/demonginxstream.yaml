@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demonginxstream
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      run: demonginxstream
+  template:
+    metadata:
+      labels:
+        run: demonginxstream
+    spec:
+      volumes:
+      - name: data
+        hostPath:
+          path: /data
+      containers:
+      - name: demonginxstream
+        image: ngonzalez121/demonginxstream
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+          hostPort: 443
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+        searches:
+          - link12.ddns.net
+        options:
+          - name: ndots
+            value: "2"
+          - name: eth0
