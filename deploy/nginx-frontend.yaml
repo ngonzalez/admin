@@ -2,23 +2,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demoredis
+  name: nginx-frontend
   namespace: development
 spec:
   selector:
     matchLabels:
-      run: demoredis
+      run: nginx-frontend
   template:
     metadata:
       labels:
-        run: demoredis
+        run: nginx-frontend
     spec:
       containers:
-      - name: demoredis
-        image: ngonzalez121/demoredis
+      - name: nginx-frontend
+        image: ngonzalez121/nginx-frontend
         ports:
-        - name: redis
-          containerPort: 6379
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+          hostPort: 443
       dnsConfig:
         nameservers:
           - 8.8.8.8

@@ -2,23 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demopostgresql
+  name: redis
   namespace: development
 spec:
   selector:
     matchLabels:
-      run: demopostgresql
+      run: redis
   template:
     metadata:
       labels:
-        run: demopostgresql
+        run: redis
     spec:
       containers:
-      - name: demopostgresql
-        image: ngonzalez121/demopostgresql
+      - name: redis
+        image: ngonzalez121/redis
         ports:
-        - name: postgresql
-          containerPort: 5432
+        - name: redis
+          containerPort: 6379
       dnsConfig:
         nameservers:
           - 8.8.8.8
