@@ -2,26 +2,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demonginxfrontend
+  name: nginx-stream
   namespace: development
 spec:
   selector:
     matchLabels:
-      run: demonginxfrontend
+      run: nginx-stream
   template:
     metadata:
       labels:
-        run: demonginxfrontend
+        run: nginx-stream
     spec:
+      volumes:
+      - name: data
+        hostPath:
+          path: /data
       containers:
-      - name: demonginxfrontend
-        image: ngonzalez121/demonginxfrontend
+      - name: nginx-stream
+        image: ngonzalez121/nginx-stream
         ports:
-        - name: http
-          containerPort: 80
         - name: https
-          containerPort: 443
-          hostPort: 443
+          containerPort: 5050
+          hostPort: 5050
+        volumeMounts:
+        - name: data
+          mountPath: /data
       dnsConfig:
         nameservers:
           - 8.8.8.8

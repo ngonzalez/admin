@@ -2,24 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demoappbackend
+  name: app-backend
   namespace: development
 spec:
   selector:
     matchLabels:
-      run: demoappbackend
+      run: app-backend
   template:
     metadata:
       labels:
-        run: demoappbackend
+        run: app-backend
     spec:
       volumes:
       - name: config
         secret:
-          secretName: demoappbackend-env
+          secretName: app-backend-env
       containers:
-      - name: demoappbackend
-        image: ngonzalez121/demoappbackend
+      - name: app-backend
+        image: ngonzalez121/app-backend
         ports:
         - name: puma
           containerPort: 3000

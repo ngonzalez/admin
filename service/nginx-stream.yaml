@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: demoredis-loadbalancer
+  name: nginx-stream-loadbalancer
   namespace: development
 spec:
   type: LoadBalancer
   selector:
-    run: demoredis
+    run: nginx-stream
   ports:
-  - port: 6379
-    name: redis
-    targetPort: 6379
+  - port: 5050
+    name: https
+    targetPort: 5050

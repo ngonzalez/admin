@@ -1,24 +1,24 @@
----
+deploy/postgresql.yaml ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demonginxbackend
+  name: postgresql
   namespace: development
 spec:
   selector:
     matchLabels:
-      run: demonginxbackend
+      run: postgresql
   template:
     metadata:
       labels:
-        run: demonginxbackend
+        run: postgresql
     spec:
       containers:
-      - name: demonginxbackend
-        image: ngonzalez121/demonginxbackend
+      - name: postgresql
+        image: ngonzalez121/postgresql
         ports:
-        - name: nginx
-          containerPort: 9090
+        - name: postgresql
+          containerPort: 5432
       dnsConfig:
         nameservers:
           - 8.8.8.8
