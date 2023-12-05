@@ -3,12 +3,6 @@
 
 #### create namespace, deployment and service
 
-⚠️ Coredns
-
-```shell
-kubectl apply -f configmap/coredns.yaml
-```
-
 ⚠️ Admin user
 
 ```shell
@@ -26,17 +20,4 @@ kubectl -n kubernetes-dashboard create token admin-user
 
 ```shell
 kubectl apply -f namespace/development.yaml
-```
-
-⚠️ Admin user
-
-```
-kubectl apply -f service-account/admin-user.yaml
-kubectl apply -f service-account/cluster-admin.yaml
-```
-
-⚠️ Generate token
-
-```
-kubectl -n kubernetes-dashboard create token admin-user
 ```
