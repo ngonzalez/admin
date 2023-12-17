@@ -13,6 +13,10 @@ spec:
       labels:
         run: nginx-frontend
     spec:
+      volumes:
+      - name: data
+        hostPath:
+          path: /data
       containers:
       - name: nginx-frontend
         image: ngonzalez121/nginx-frontend
@@ -22,6 +26,9 @@ spec:
         - name: https
           containerPort: 443
           hostPort: 443
+        volumeMounts:
+        - name: data
+          mountPath: /data
       dnsConfig:
         nameservers:
           - 8.8.8.8
