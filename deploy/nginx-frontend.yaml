@@ -19,7 +19,7 @@ spec:
           path: /data
       containers:
       - name: nginx-frontend
-        image: ngonzalez121/nginx-frontend
+        image: registry.gitlab.com/ngonzalez121/demo-app-frontend/nginx-frontend
         ports:
         - name: http
           containerPort: 80
