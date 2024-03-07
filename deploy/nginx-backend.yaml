@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx-backend
-        image: ngonzalez121/nginx-backend
+        image: registry.gitlab.com/ngonzalez121/demo-app-backend/nginx-backend
         ports:
         - name: nginx
           containerPort: 9090
