@@ -22,7 +22,7 @@ spec:
           secretName: app-stream-env
       containers:
       - name: app-stream
-        image: ngonzalez121/app-stream
+        image: registry.gitlab.com/ngonzalez121/demo-app-stream/app-stream
         ports:
         - name: puma
           containerPort: 5000
