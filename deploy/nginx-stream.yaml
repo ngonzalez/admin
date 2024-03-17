@@ -23,7 +23,8 @@ spec:
         ports:
         - name: https
           containerPort: 5050
-          hostPort: 5050
+        - name: nginx-status
+          containerPort: 2221
         volumeMounts:
         - name: data
           mountPath: /data

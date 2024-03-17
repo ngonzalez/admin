@@ -12,3 +12,6 @@ spec:
   - port: 5050
     name: https
     targetPort: 5050
+  - port: 2221
+    name: nginx-status
+    targetPort: 2221
