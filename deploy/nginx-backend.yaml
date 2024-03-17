@@ -19,6 +19,8 @@ spec:
         ports:
         - name: nginx
           containerPort: 9090
+        - name: nginx-status
+          containerPort: 2222
       dnsConfig:
         nameservers:
           - 8.8.8.8

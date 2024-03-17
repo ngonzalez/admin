@@ -12,3 +12,6 @@ spec:
   - port: 9090
     name: nginx
     targetPort: 9090
+  - port: 2222
+    name: nginx-status
+    targetPort: 2222
