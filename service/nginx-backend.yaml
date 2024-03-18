@@ -9,9 +9,9 @@ spec:
   selector:
     run: nginx-backend
   ports:
-  - port: 3030
+  - port: 4040
     name: nginx
-    targetPort: 3030
+    targetPort: 4040
   - port: 2222
     name: nginx-status
     targetPort: 2222
