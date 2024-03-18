@@ -29,7 +29,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 # Add your nginx server details here
-nginxServer: "http://link12.ddns.net:2222/nginx_status"
+nginxServer: "http://192.168.1.14:2222/nginx_status"
 
 # Arguments - https://github.com/nginxinc/nginx-prometheus-exporter#command-line-arguments
 options: {}
