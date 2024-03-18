@@ -18,7 +18,7 @@ spec:
         image: registry.gitlab.com/ngonzalez121/demo-app-backend/nginx-backend
         ports:
         - name: nginx
-          containerPort: 3030
+          containerPort: 4040
         - name: nginx-status
           containerPort: 2222
       dnsConfig:

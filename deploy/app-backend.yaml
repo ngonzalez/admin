@@ -22,18 +22,18 @@ spec:
         image: registry.gitlab.com/ngonzalez121/demo-app-backend/app-backend
         ports:
         - name: puma
-          containerPort: 3000
-          hostPort: 3000
+          containerPort: 4000
+          hostPort: 4000
         livenessProbe:
           httpGet:
             path: /_health
-            port: 3000
+            port: 4000
           initialDelaySeconds: 3
           timeoutSeconds: 1
         readinessProbe:
           httpGet:
             path: /_health
-            port: 3000
+            port: 4000
           initialDelaySeconds: 3
           timeoutSeconds: 1
         volumeMounts:
