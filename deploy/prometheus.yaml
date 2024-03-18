@@ -680,7 +680,7 @@ server:
 
     loadBalancerIP: "192.168.1.14"
     loadBalancerSourceRanges: []
-    servicePort: 9090
+    servicePort: 9091
     sessionAffinity: None
     type: ClusterIP
 
@@ -762,7 +762,7 @@ serverFiles:
       - job_name: prometheus
         static_configs:
           - targets:
-            - localhost:9090
+            - localhost:9091
 
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
