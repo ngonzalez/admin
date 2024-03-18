@@ -763,6 +763,18 @@ serverFiles:
         static_configs:
           - targets:
             - localhost:9090
+      - job_name: nginx-backend
+        static_configs:
+          - targets:
+            - http://link12.ddns.net:2222/nginx_status
+      - job_name: nginx-stream
+        static_configs:
+          - targets:
+            - http://link12.ddns.net:2221/nginx_status
+      - job_name: nginx-frontend
+        static_configs:
+          - targets:
+            - http://link12.ddns.net:2220/nginx_status
 
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
