@@ -766,7 +766,23 @@ serverFiles:
       - job_name: nginx-backend
         static_configs:
           - targets:
-            - 192.168.1.14:9113
+            - 192.168.1.14:9112
+      - job_name: nginx-frontend
+        static_configs:
+          - targets:
+            - 192.168.1.14:9110
+      - job_name: nginx-stream
+        static_configs:
+          - targets:
+            - 192.168.1.14:9111
+      - job_name: postgresql
+        static_configs:
+          - targets:
+            - 192.168.1.14:9187
+      - job_name: redis
+        static_configs:
+          - targets:
+            - 192.168.1.14:9121
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
       # and services to allow each to use different authentication configs.
