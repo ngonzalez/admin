@@ -52,7 +52,7 @@ readinessProbe:
 
 service:
   type: ClusterIP
-  port: 9114
+  port: 9113
   annotations: {}
 
 podAnnotations: {}
