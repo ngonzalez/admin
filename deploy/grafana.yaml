@@ -79,12 +79,12 @@ deploymentStrategy:
 readinessProbe:
   httpGet:
     path: /api/health
-    port: 4000
+    port: 3000
 
 livenessProbe:
   httpGet:
     path: /api/health
-    port: 4000
+    port: 3000
   initialDelaySeconds: 60
   timeoutSeconds: 30
   failureThreshold: 10
@@ -337,7 +337,7 @@ extraContainers: ""
 #   - -email-domain=*
 #   - -cookie-secret=
 #   - -http-address=http://0.0.0.0:4181
-#   - -upstream-url=http://127.0.0.1:4000
+#   - -upstream-url=http://127.0.0.1:3000
 #   ports:
 #     - name: proxy-web
 #       containerPort: 4181
@@ -894,7 +894,7 @@ sidecar:
     # watchClientTimeout: 60
     #
     # Endpoint to send request to reload alerts
-    reloadURL: "http://localhost:4000/api/admin/provisioning/alerting/reload"
+    reloadURL: "http://localhost:3000/api/admin/provisioning/alerting/reload"
     # Absolute path to shell script to execute after a alert got reloaded
     script: null
     skipReload: false
@@ -934,7 +934,7 @@ sidecar:
     # You can use this parameter together with `provider.foldersFromFilesStructure`to annotate configmaps and create folder structure.
     folderAnnotation: null
     # Endpoint to send request to reload alerts
-    reloadURL: "http://localhost:4000/api/admin/provisioning/dashboards/reload"
+    reloadURL: "http://localhost:3000/api/admin/provisioning/dashboards/reload"
     # Absolute path to shell script to execute after a configmap got reloaded
     script: null
     skipReload: false
@@ -1000,7 +1000,7 @@ sidecar:
     # watchClientTimeout: 60
     #
     # Endpoint to send request to reload datasources
-    reloadURL: "http://localhost:4000/api/admin/provisioning/datasources/reload"
+    reloadURL: "http://localhost:3000/api/admin/provisioning/datasources/reload"
     # Absolute path to shell script to execute after a datasource got reloaded
     script: null
     skipReload: false
@@ -1040,7 +1040,7 @@ sidecar:
     # watchClientTimeout: 60
     #
     # Endpoint to send request to reload plugins
-    reloadURL: "http://localhost:4000/api/admin/provisioning/plugins/reload"
+    reloadURL: "http://localhost:3000/api/admin/provisioning/plugins/reload"
     # Absolute path to shell script to execute after a plugin got reloaded
     script: null
     skipReload: false
@@ -1080,7 +1080,7 @@ sidecar:
     # watchClientTimeout: 60
     #
     # Endpoint to send request to reload notifiers
-    reloadURL: "http://localhost:4000/api/admin/provisioning/notifications/reload"
+    reloadURL: "http://localhost:3000/api/admin/provisioning/notifications/reload"
     # Absolute path to shell script to execute after a notifier got reloaded
     script: null
     skipReload: false
