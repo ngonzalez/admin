@@ -762,7 +762,7 @@ serverFiles:
       - job_name: prometheus
         static_configs:
           - targets:
-            - 192.168.1.14:9090
+            - localhost:9090
       - job_name: nginx-backend
         static_configs:
           - targets:
