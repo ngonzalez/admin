@@ -1,4 +1,3 @@
----
 # Additional labels to add to all resources
 additionalLabels: {}
 
@@ -29,7 +28,9 @@ nameOverride: ""
 fullnameOverride: ""
 
 # Add your nginx server details here
-nginxServer: "192.168.1.14:2222/nginx_status"
+nginxServer:
+  - "http://192.168.1.14:2222/nginx_status"
+# nginxServer: "http://frontend.default.svc.cluster.local:8080/stub_status"
 
 # Arguments - https://github.com/nginxinc/nginx-prometheus-exporter#command-line-arguments
 options: {}
