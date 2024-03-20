@@ -763,7 +763,7 @@ serverFiles:
         static_configs:
           - targets:
             - localhost:9090
-      - job_name: nginx-exporter
+      - job_name: nginx
         static_configs:
           - targets:
             - 192.168.1.14:9113
