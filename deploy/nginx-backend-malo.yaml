@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-backend-malo
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      run: nginx-backend-malo
+  template:
+    metadata:
+      labels:
+        run: nginx-backend-malo
+    spec:
+      containers:
+      - name: nginx-backend-malo
+        image: registry.gitlab.com/ngonzalez121/malo-technical-test/nginx-backend-malo
+        ports:
+        - name: nginx
+          containerPort: 3030
+        - name: nginx-status
+          containerPort: 2222
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+        searches:
+          - malo.zapto.org
+        options:
+          - name: ndots
+            value: "2"
+          - name: eth0

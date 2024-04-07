@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-backend-malo
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      run: app-backend-malo
+  template:
+    metadata:
+      labels:
+        run: app-backend-malo
+    spec:
+      volumes:
+      - name: config
+        secret:
+          secretName: app-backend-env
+      containers:
+      - name: app-backend-malo
+        image: registry.gitlab.com/ngonzalez121/malo-technical-test/app-backend-malo
+        ports:
+        - name: puma
+          containerPort: 3000
+          hostPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /_health
+            port: 3000
+          initialDelaySeconds: 3
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /_health
+            port: 3000
+          initialDelaySeconds: 3
+          timeoutSeconds: 1
+        volumeMounts:
+        - name: config
+          mountPath: /tmp/secrets/
+          readOnly: true
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+        searches:
+          - malo.zapto.org
+        options:
+          - name: ndots
+            value: "2"
+          - name: eth0

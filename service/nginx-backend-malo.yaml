@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-backend-malo-loadbalancer
+  namespace: development
+spec:
+  type: LoadBalancer
+  selector:
+    run: nginx-backend-malo
+  ports:
+  - port: 3030
+    name: nginx
+    targetPort: 3030
+  - port: 2222
+    name: nginx-status
+    targetPort: 2222

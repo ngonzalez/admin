@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-backend-malo-loadbalancer
+  namespace: development
+spec:
+  type: LoadBalancer
+  selector:
+    run: app-backend-malo
+  ports:
+  - port: 3000
+    name: puma
+    targetPort: 3000
