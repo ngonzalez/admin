@@ -45,7 +45,7 @@ spec:
           - 8.8.8.8
           - 8.8.4.4
         searches:
-          - malo.zapto.org
+          - link12.ddns.net
         options:
           - name: ndots
             value: "2"
