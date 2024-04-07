@@ -16,7 +16,7 @@ spec:
       volumes:
       - name: config
         secret:
-          secretName: app-backend-env
+          secretName: app-backend-malo-env
       containers:
       - name: app-backend-malo
         image: registry.gitlab.com/ngonzalez121/malo-technical-test/app-backend-malo
