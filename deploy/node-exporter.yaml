@@ -1,4 +1,3 @@
----
 # Default values for prometheus-node-exporter.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
@@ -46,7 +45,7 @@ kubeRBACProxy:
   image:
     registry: quay.io
     repository: brancz/kube-rbac-proxy
-    tag: v0.15.0
+    tag: v0.16.0
     sha: ""
     pullPolicy: IfNotPresent
 
@@ -88,8 +87,8 @@ kubeRBACProxy:
 service:
   enabled: true
   type: ClusterIP
-  port: 9101
-  targetPort: 9101
+  port: 9100
+  targetPort: 9100
   nodePort:
   portName: metrics
   listenOnAllInterfaces: true
