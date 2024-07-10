@@ -88,8 +88,8 @@ service:
   enabled: true
   type: ClusterIP
   clusterIP: ""
-  port: 9101
-  targetPort: 9101
+  port: 9100
+  targetPort: 9100
   nodePort:
   portName: metrics
   listenOnAllInterfaces: true
