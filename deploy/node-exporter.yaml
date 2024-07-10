@@ -464,29 +464,29 @@ sidecarHostVolumeMounts: []
 ##
 extraInitContainers: []
 
-## Liveness probe
-##
-livenessProbe:
-  failureThreshold: 3
-  httpGet:
-    httpHeaders: []
-    scheme: http
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  successThreshold: 1
-  timeoutSeconds: 1
+# ## Liveness probe
+# ##
+# livenessProbe:
+#   failureThreshold: 3
+#   httpGet:
+#     httpHeaders: []
+#     scheme: http
+#   initialDelaySeconds: 0
+#   periodSeconds: 10
+#   successThreshold: 1
+#   timeoutSeconds: 1
 
-## Readiness probe
-##
-readinessProbe:
-  failureThreshold: 3
-  httpGet:
-    httpHeaders: []
-    scheme: http
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  successThreshold: 1
-  timeoutSeconds: 1
+# ## Readiness probe
+# ##
+# readinessProbe:
+#   failureThreshold: 3
+#   httpGet:
+#     httpHeaders: []
+#     scheme: http
+#   initialDelaySeconds: 0
+#   periodSeconds: 10
+#   successThreshold: 1
+#   timeoutSeconds: 1
 
 # Enable vertical pod autoscaler support for prometheus-node-exporter
 verticalPodAutoscaler:
