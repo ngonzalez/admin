@@ -131,6 +131,9 @@ config:
     # Specify one of both datasource or datasourceSecret
     host: "192.168.1.14"
     user: postgres
+    # Specify userFile if DB username is stored in a file.
+    # For example, to use with vault-injector from Hashicorp
+    userFile: ''
     userSecret: {}
     # Secret name
     #  name:
