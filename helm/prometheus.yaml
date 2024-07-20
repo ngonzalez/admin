@@ -763,7 +763,15 @@ serverFiles:
         static_configs:
           - targets:
             - localhost:9090
-      - job_name: nginx
+      - job_name: nginx backend
+        static_configs:
+          - targets:
+            - 192.168.1.14:9111
+      - job_name: nginx stream
+        static_configs:
+          - targets:
+            - 192.168.1.14:9112
+      - job_name: nginx frontend
         static_configs:
           - targets:
             - 192.168.1.14:9113
