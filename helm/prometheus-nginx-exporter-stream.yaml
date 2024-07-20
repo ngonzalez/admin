@@ -29,10 +29,13 @@ nameOverride: ""
 fullnameOverride: ""
 
 # Add your nginx server details here
-nginxServer: "http://192.168.1.14:2221/nginx_status"
+# nginxServer: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:8080/stub_status"
+nginxServer: http://192.168.1.14:2221/nginx_status
 
 # Arguments - https://github.com/nginxinc/nginx-prometheus-exporter#command-line-arguments
-options: {}
+options: {
+  "web.listen-address": ":9112"
+}
   # -nginx.plus
   # -nginx.retries int
 
@@ -52,7 +55,7 @@ readinessProbe:
 
 service:
   type: ClusterIP
-  port: 9113
+  port: 9112
   annotations: {}
 
 podAnnotations: {}
