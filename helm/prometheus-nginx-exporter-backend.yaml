@@ -30,11 +30,11 @@ fullnameOverride: ""
 
 # Add your nginx server details here
 # nginxServer: "http://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:8080/stub_status"
+nginxServer: http://192.168.1.14:2222/nginx_status
 
 # Arguments - https://github.com/nginxinc/nginx-prometheus-exporter#command-line-arguments
 options: {
   -web.listen-address :9111
-  -nginx.scrape-uri http://192.168.1.14:2222/nginx_status
 }
   # -nginx.plus
   # -nginx.retries int
