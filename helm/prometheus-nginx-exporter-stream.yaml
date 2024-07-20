@@ -33,9 +33,9 @@ fullnameOverride: ""
 nginxServer: http://192.168.1.14:2221/nginx_status
 
 # Arguments - https://github.com/nginxinc/nginx-prometheus-exporter#command-line-arguments
-options:
-  - key: web.listen-address:
-    value: :9112
+options: {
+  "web.listen-address": ":9112"
+}
   # -nginx.plus
   # -nginx.retries int
 
