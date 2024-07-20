@@ -34,7 +34,7 @@ nginxServer: http://192.168.1.14:2220/nginx_status
 
 # Arguments - https://github.com/nginxinc/nginx-prometheus-exporter#command-line-arguments
 options: {
-  -web.listen-address :9113
+  web.listen-address :9113
 }
   # -nginx.plus
   # -nginx.retries int
