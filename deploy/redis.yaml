@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: registry.gitlab.com/ngonzalez121/demo-app-backend-org/redis
+        image: registry.gitlab.com/ngonzalez121/demo-app-backend-org/redis:latest
         ports:
         - name: redis
           containerPort: 6379
