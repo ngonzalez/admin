@@ -19,7 +19,7 @@ spec:
           path: /data
       containers:
       - name: nginx-stream
-        image: registry.gitlab.com/ngonzalez121/demo-app-stream/nginx-stream
+        image: registry.gitlab.com/ngonzalez121/demo-app-stream-org/nginx-stream
         ports:
         - name: https
           containerPort: 5050

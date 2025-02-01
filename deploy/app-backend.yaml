@@ -19,7 +19,7 @@ spec:
           secretName: app-backend-env
       containers:
       - name: app-backend
-        image: registry.gitlab.com/ngonzalez121/demo-app-backend/app-backend
+        image: registry.gitlab.com/ngonzalez121/demo-app-backend-org/app-backend
         ports:
         - name: puma
           containerPort: 4000
