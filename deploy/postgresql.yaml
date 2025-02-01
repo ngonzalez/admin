@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: postgresql
-        image: registry.gitlab.com/ngonzalez121/demo-app-backend/postgresql
+        image: registry.gitlab.com/ngonzalez121/demo-app-backend-org/postgresql
         ports:
         - name: postgresql
           containerPort: 5432
