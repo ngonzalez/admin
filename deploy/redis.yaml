@@ -24,7 +24,7 @@ spec:
           - 8.8.8.8
           - 8.8.4.4
         searches:
-          - link12.ddns.net
+          - appshare.site
         options:
           - name: ndots
             value: "2"
