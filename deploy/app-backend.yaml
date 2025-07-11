@@ -20,6 +20,15 @@ spec:
       containers:
       - name: app-backend
         image: registry.gitlab.com/ngonzalez121/demo-app-backend-org/app-backend
+        resources:
+          requests:
+            ephemeral-storage: "1G"
+            memory: "500M"
+            cpu: "0.5"
+          limits:
+            ephemeral-storage: "2G"
+            memory: "2G"
+            cpu: "2"
         ports:
         - name: puma
           containerPort: 4000
@@ -37,9 +46,15 @@ spec:
           initialDelaySeconds: 3
           timeoutSeconds: 1
         volumeMounts:
+        - name: ephemeral
+          mountPath: /tmp
         - name: config
-          mountPath: /tmp/secrets/
+          mountPath: /etc/secrets/
           readOnly: true
+      volumes:
+      - name: ephemeral
+        emptyDir:
+          sizeLimit: "500M"
       dnsConfig:
         nameservers:
           - 8.8.8.8

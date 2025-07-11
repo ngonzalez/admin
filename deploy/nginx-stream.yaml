@@ -13,21 +13,21 @@ spec:
       labels:
         run: nginx-stream
     spec:
-      volumes:
-      - name: data
-        hostPath:
-          path: /data
       containers:
       - name: nginx-stream
         image: registry.gitlab.com/ngonzalez121/demo-app-stream-org/nginx-stream
+        resources:
+          requests:
+            memory: "500M"
+            cpu: "0.5"
+          limits:
+            memory: "2G"
+            cpu: "2"
         ports:
         - name: https
           containerPort: 5050
         - name: nginx-status
           containerPort: 2221
-        volumeMounts:
-        - name: data
-          mountPath: /data
       dnsConfig:
         nameservers:
           - 8.8.8.8
