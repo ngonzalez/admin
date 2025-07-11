@@ -18,23 +18,14 @@ spec:
         image: registry.gitlab.com/ngonzalez121/demo-app-database-org/redis
         resources:
           requests:
-            ephemeral-storage: "1G"
             memory: "500M"
             cpu: "0.5"
           limits:
-            ephemeral-storage: "2G"
             memory: "2G"
             cpu: "2"
-        volumeMounts:
-        - name: ephemeral
-          mountPath: "/tmp"
         ports:
         - name: redis
           containerPort: 6379
-      volumes:
-      - name: ephemeral
-        emptyDir:
-          sizeLimit: "500M"
       dnsConfig:
         nameservers:
           - 8.8.8.8

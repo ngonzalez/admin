@@ -13,13 +13,16 @@ spec:
       labels:
         run: nginx-frontend
     spec:
-      volumes:
-      - name: data
-        hostPath:
-          path: /data
       containers:
       - name: nginx-frontend
         image: registry.gitlab.com/ngonzalez121/demo-app-frontend-org/nginx-frontend
+        resources:
+          requests:
+            memory: "500M"
+            cpu: "0.5"
+          limits:
+            memory: "2G"
+            cpu: "2"
         ports:
         - name: http
           containerPort: 80
@@ -27,9 +30,6 @@ spec:
           containerPort: 443
         - name: nginx-status
           containerPort: 2220
-        volumeMounts:
-        - name: data
-          mountPath: /data
       dnsConfig:
         nameservers:
           - 8.8.8.8
