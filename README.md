@@ -1,4 +1,4 @@
 # admin
-![logo](http://bit.ly/44QITr4)
+![logo](http://bit.ly/4liMFjP)
 
 Kubernetes deployment files for backend application with Nginx.
