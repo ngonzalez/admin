@@ -18,11 +18,9 @@ spec:
         image: registry.gitlab.com/ngonzalez121/demo-app-database-org/postgresql
         resources:
           requests:
-            ephemeral-storage: "1G"
             memory: "500M"
             cpu: "0.5"
           limits:
-            ephemeral-storage: "2G"
             memory: "2G"
             cpu: "2"
         volumeMounts:
