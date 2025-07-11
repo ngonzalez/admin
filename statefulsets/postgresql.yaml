@@ -24,7 +24,7 @@ spec:
             memory: "2G"
             cpu: "2"
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
+        - mountPath: /var/lib/postgresql
           name: data
         ports:
         - name: postgresql
