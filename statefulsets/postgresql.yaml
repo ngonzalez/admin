@@ -7,39 +7,25 @@ metadata:
 spec:
   selector:
     matchLabels:
-      run: postgresql
+      app: postgresql
   template:
     metadata:
       labels:
-        run: postgresql
+        app: postgresql
     spec:
       containers:
-      - name: postgresql
-        image: registry.gitlab.com/ngonzalez121/demo-app-database-org/postgresql
-        resources:
-          requests:
-            memory: "500M"
-            cpu: "0.5"
-          limits:
-            memory: "2G"
-            cpu: "2"
-        volumeMounts:
-        - mountPath: /var/lib/postgresql
-          name: data
-        ports:
         - name: postgresql
-          containerPort: 5432
+          image: 'postgres:17'
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgresql-secret
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgresdata
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: postgresql-volume-claim
-      dnsConfig:
-        nameservers:
-          - 8.8.8.8
-          - 8.8.4.4
-        searches:
-          - link12.ddns.net
-        options:
-          - name: ndots
-            value: "2"
-          - name: eth0
+        - name: postgresdata
+          persistentVolumeClaim:
+            claimName: postgresql-volume-claim
