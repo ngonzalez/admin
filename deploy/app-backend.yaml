@@ -13,10 +13,6 @@ spec:
       labels:
         run: app-backend
     spec:
-      volumes:
-      - name: config
-        secret:
-          secretName: app-backend-env
       containers:
       - name: app-backend
         image: registry.gitlab.com/ngonzalez121/demo-app-backend-org/app-backend
@@ -52,6 +48,9 @@ spec:
           mountPath: /etc/secrets/
           readOnly: true
       volumes:
+      - name: config
+        secret:
+          secretName: app-backend-env
       - name: ephemeral
         emptyDir:
           sizeLimit: "500M"

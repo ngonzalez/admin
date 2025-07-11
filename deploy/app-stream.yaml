@@ -13,10 +13,6 @@ spec:
       labels:
         run: app-stream
     spec:
-      volumes:
-      - name: config
-        secret:
-          secretName: app-stream-env
       containers:
       - name: app-stream
         image: registry.gitlab.com/ngonzalez121/demo-app-stream-org/app-stream
@@ -52,6 +48,9 @@ spec:
           mountPath: /etc/secrets/
           readOnly: true
       volumes:
+      - name: config
+        secret:
+          secretName: app-stream-env
       - name: ephemeral
         emptyDir:
           sizeLimit: "500M"
