@@ -15,15 +15,15 @@ spec:
     spec:
       containers:
         - name: postgresql
-          image: "postgres:17"
+          image: postgres:17
           imagePullPolicy: IfNotPresent
           resources:
             requests:
-              memory: "500M"
-              cpu: "0.5"
+              memory: 500M
+              cpu: 0.5
             limits:
-              memory: "2G"
-              cpu: "2"
+              memory: 2G
+              cpu: 2
           ports:
             - containerPort: 5432
           envFrom:
