@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: postgresql
-          image: 'postgres:17'
-          imagePullPolicy: IfNotPresent
+          image: registry.gitlab.com/ngonzalez121/demo-app-database-org/postgresql
           resources:
             requests:
               memory: "500M"
