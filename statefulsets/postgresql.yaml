@@ -16,6 +16,10 @@ spec:
       containers:
         - name: postgresql
           image: registry.gitlab.com/ngonzalez121/demo-app-database-org/postgresql
+          command: ["/bin/chown","-R","postgres:", "/var/lib/postgresql/data"]
+          securityContext:
+            runAsUser: 0
+            privileged: true
           resources:
             requests:
               memory: "500M"
