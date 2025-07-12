@@ -17,15 +17,22 @@ spec:
         - name: postgresql
           image: 'postgres:17'
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "500M"
+              cpu: "0.5"
+            limits:
+              memory: "2G"
+              cpu: "2"
           ports:
             - containerPort: 5432
           envFrom:
             - configMapRef:
-                name: postgresql-secret
+                name: postgresql-env
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgresdata
+              name: postgresql-data
       volumes:
-        - name: postgresdata
+        - name: postgresql-data
           persistentVolumeClaim:
             claimName: postgresql-volume-claim
