@@ -18,13 +18,13 @@ spec:
         image: registry.gitlab.com/ngonzalez121/demo-app-stream-org/app-stream
         resources:
           requests:
-            ephemeral-storage: "1G"
-            memory: "500M"
-            cpu: "0.5"
+            ephemeral-storage: 1G
+            memory: 2G
+            cpu: 0.5
           limits:
-            ephemeral-storage: "2G"
-            memory: "2G"
-            cpu: "2"
+            ephemeral-storage: 4G
+            memory: 4G
+            cpu: 2
         ports:
         - name: puma
           containerPort: 5000
@@ -53,7 +53,7 @@ spec:
           secretName: app-stream-env
       - name: ephemeral
         emptyDir:
-          sizeLimit: "500M"
+          sizeLimit: 2G
       dnsConfig:
         nameservers:
           - 8.8.8.8
