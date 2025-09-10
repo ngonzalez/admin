@@ -13,16 +13,18 @@ spec:
       labels:
         run: app-stream
     spec:
-      volumes:
-      - name: data
-        hostPath:
-          path: /data
-      - name: config
-        secret:
-          secretName: app-stream-env
       containers:
       - name: app-stream
-        image: registry.gitlab.com/ngonzalez121/demo-app-stream/app-stream
+        image: registry.gitlab.com/ngonzalez121/demo-app-stream-org/app-stream
+        resources:
+          requests:
+            ephemeral-storage: 1G
+            memory: 2G
+            cpu: 0.5
+          limits:
+            ephemeral-storage: 4G
+            memory: 4G
+            cpu: 2
         ports:
         - name: puma
           containerPort: 5000
@@ -40,11 +42,18 @@ spec:
           initialDelaySeconds: 3
           timeoutSeconds: 1
         volumeMounts:
+        - name: ephemeral
+          mountPath: /tmp
         - name: config
-          mountPath: /tmp/secrets/
+          mountPath: /etc/secrets/
           readOnly: true
-        - name: data
-          mountPath: /data
+      volumes:
+      - name: config
+        secret:
+          secretName: app-stream-env
+      - name: ephemeral
+        emptyDir:
+          sizeLimit: 2G
       dnsConfig:
         nameservers:
           - 8.8.8.8

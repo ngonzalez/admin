@@ -1,6 +1,6 @@
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: redis
   namespace: development
@@ -15,7 +15,14 @@ spec:
     spec:
       containers:
       - name: redis
-        image: registry.gitlab.com/ngonzalez121/demo-app-backend/redis
+        image: registry.gitlab.com/ngonzalez121/demo-app-database-org/redis
+        resources:
+          requests:
+            memory: "500M"
+            cpu: "0.5"
+          limits:
+            memory: "2G"
+            cpu: "2"
         ports:
         - name: redis
           containerPort: 6379

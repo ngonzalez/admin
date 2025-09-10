@@ -15,9 +15,16 @@ spec:
     spec:
       containers:
       - name: nginx-backend
-        image: registry.gitlab.com/ngonzalez121/demo-app-backend/nginx-backend
+        image: registry.gitlab.com/ngonzalez121/demo-app-backend-org/nginx-backend
+        resources:
+          requests:
+            memory: "500M"
+            cpu: "0.5"
+          limits:
+            memory: "2G"
+            cpu: "2"
         ports:
-        - name: nginx
+        - name: https
           containerPort: 4040
         - name: nginx-status
           containerPort: 2222

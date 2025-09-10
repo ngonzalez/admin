@@ -1,17 +1,5 @@
 # admin
-![logo](https://user-images.githubusercontent.com/26479/113612862-aaadd080-9650-11eb-83db-7a3103293c3c.png)
 
-#### kubernetes dashboard
+<img src="http://bit.ly/44Ufu09" width="200" />
 
-⚠️ Admin user
-
-```shell
-kubectl apply -f service-account/admin-user.yaml
-kubectl apply -f service-account/cluster-admin.yaml
-```
-
-⚠️ Generate token
-
-```shell
-kubectl -n kubernetes-dashboard create token admin-user
-```
+Kubernetes deployment files for backend application with Nginx.
