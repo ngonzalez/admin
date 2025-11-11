@@ -22,7 +22,7 @@ spec:
             memory: 2G
             cpu: 0.5
           limits:
-            ephemeral-storage: 4G
+            ephemeral-storage: 20G
             memory: 4G
             cpu: 2
         ports:
