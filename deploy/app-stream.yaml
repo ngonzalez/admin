@@ -18,13 +18,13 @@ spec:
         image: registry.gitlab.com/ngonzalez121/demo-app-stream-org/app-stream
         resources:
           requests:
-            ephemeral-storage: 1G
-            memory: 2G
+            ephemeral-storage: 5G
+            memory: 5G
             cpu: 0.5
           limits:
             ephemeral-storage: 20G
-            memory: 4G
-            cpu: 2
+            memory: 20G
+            cpu: 4
         ports:
         - name: puma
           containerPort: 5000
