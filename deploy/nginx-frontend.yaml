@@ -30,6 +30,31 @@ spec:
           containerPort: 443
         - name: nginx-status
           containerPort: 2220
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 3
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 3
+          timeoutSeconds: 1
+        volumeMounts:
+        - name: ephemeral
+          mountPath: /tmp
+        - name: config
+          mountPath: /etc/secrets/
+          readOnly: true
+      volumes:
+      - name: config
+        secret:
+          secretName: app-frontend-env
+      - name: ephemeral
+        emptyDir:
+          sizeLimit: 2G
       dnsConfig:
         nameservers:
           - 8.8.8.8
