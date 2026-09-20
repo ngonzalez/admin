@@ -44,13 +44,7 @@ spec:
         volumeMounts:
         - name: ephemeral
           mountPath: /tmp
-        - name: config
-          mountPath: /etc/secrets/
-          readOnly: true
       volumes:
-      - name: config
-        secret:
-          secretName: app-backend-env
       - name: ephemeral
         emptyDir:
           sizeLimit: 2G
