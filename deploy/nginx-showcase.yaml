@@ -36,6 +36,7 @@ spec:
       - name: tls
         secret:
           secretName: link12-ddns-net-tls
+          optional: true
       dnsConfig:
         nameservers:
           - 8.8.8.8
