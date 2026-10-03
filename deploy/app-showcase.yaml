@@ -34,6 +34,13 @@ spec:
         - name: puma
           containerPort: 6000
           hostPort: 6000
+        # db:migrate and assets:precompile run before puma starts
+        startupProbe:
+          httpGet:
+            path: /_health
+            port: 6000
+          periodSeconds: 10
+          failureThreshold: 30
         livenessProbe:
           httpGet:
             path: /_health
