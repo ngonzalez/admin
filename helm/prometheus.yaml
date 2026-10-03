@@ -1250,6 +1250,7 @@ alertmanager:
   enabled: true
 
   persistence:
+    enabled: false
     size: 2Gi
 
   podSecurityContext:
