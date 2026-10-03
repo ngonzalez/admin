@@ -590,7 +590,19 @@ plugins: []
 ## Configure grafana datasources
 ## ref: http://docs.grafana.org/administration/provisioning/#datasources
 ##
-datasources: {}
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        uid: prometheus
+        url: http://prometheus-server.development.svc:9090
+        isDefault: true
+      - name: Loki
+        type: loki
+        uid: loki
+        url: http://loki.development.svc:3100
 #  datasources.yaml:
 #    apiVersion: 1
 #    datasources:

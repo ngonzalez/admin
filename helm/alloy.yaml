@@ -1,0 +1,57 @@
+---
+# Overrides for the grafana/alloy chart (1.13.x): ship every pod's logs to
+# Loki, and accept syslog over UDP (port 1514) from the Rails apps.
+alloy:
+  configMap:
+    content: |
+      discovery.kubernetes "pods" {
+        role = "pod"
+      }
+
+      discovery.relabel "pods" {
+        targets = discovery.kubernetes.pods.targets
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          target_label  = "namespace"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          target_label  = "pod"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          target_label  = "container"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app", "__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          separator     = ""
+          target_label  = "app"
+        }
+      }
+
+      loki.source.kubernetes "pods" {
+        targets    = discovery.relabel.pods.output
+        forward_to = [loki.write.default.receiver]
+      }
+
+      loki.source.syslog "udp" {
+        listener {
+          address        = "0.0.0.0:1514"
+          protocol       = "udp"
+          syslog_format  = "rfc3164"
+          labels         = { job = "syslog" }
+        }
+        forward_to = [loki.write.default.receiver]
+      }
+
+      loki.write "default" {
+        endpoint {
+          url = "http://loki.development.svc:3100/loki/api/v1/push"
+        }
+      }
+
+  extraPorts:
+    - name: syslog-udp
+      port: 1514
+      targetPort: 1514
+      protocol: UDP

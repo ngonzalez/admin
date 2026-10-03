@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: loki-volume
+  labels:
+    type: local
+    app: loki
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: development
+    name: storage-loki-0
+  hostPath:
+    path: /data/loki
