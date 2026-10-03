@@ -35,6 +35,11 @@ scrapeConfigs:
     static_configs:
       - targets:
           - 192.168.1.14:9113
+  nginx-showcase:
+    job_name: nginx showcase
+    static_configs:
+      - targets:
+          - 192.168.1.14:9114
   postgresql:
     static_configs:
       - targets:
