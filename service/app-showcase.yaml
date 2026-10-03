@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-showcase-loadbalancer
+  namespace: development
+spec:
+  type: LoadBalancer
+  selector:
+    run: app-showcase
+  ports:
+  - port: 6000
+    name: puma
+    targetPort: 6000

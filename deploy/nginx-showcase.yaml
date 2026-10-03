@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-showcase
+  namespace: development
+spec:
+  selector:
+    matchLabels:
+      run: nginx-showcase
+  template:
+    metadata:
+      labels:
+        run: nginx-showcase
+    spec:
+      containers:
+      - name: nginx-showcase
+        image: registry.gitlab.com/ngonzalez121/demo-app-showcase-org/nginx-showcase
+        resources:
+          requests:
+            memory: "500M"
+            cpu: "0.5"
+          limits:
+            memory: "2G"
+            cpu: "2"
+        ports:
+        - name: https
+          containerPort: 6060
+        - name: nginx-status
+          containerPort: 2224
+        volumeMounts:
+        - name: tls
+          mountPath: /etc/ssl/tls
+          readOnly: true
+      volumes:
+      - name: tls
+        secret:
+          secretName: link12-ddns-net-tls
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+          - 8.8.4.4
+        searches:
+          - link12.ddns.net
+        options:
+          - name: ndots
+            value: "2"
+          - name: eth0
