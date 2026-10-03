@@ -16,6 +16,9 @@ spec:
       containers:
       - name: app-backend
         image: registry.gitlab.com/ngonzalez121/demo-app-backend-org/app-backend
+        env:
+        - name: RAILS_LOG_TO_STDOUT
+          value: "1"
         resources:
           requests:
             ephemeral-storage: 5G

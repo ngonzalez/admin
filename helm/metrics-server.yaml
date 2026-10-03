@@ -1,0 +1,5 @@
+---
+# Overrides for the metrics-server/metrics-server chart (3.14.x).
+# kubeadm kubelets serve self-signed certificates
+args:
+  - --kubelet-insecure-tls
