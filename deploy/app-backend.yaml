@@ -17,8 +17,10 @@ spec:
       - name: app-backend
         image: registry.gitlab.com/ngonzalez121/demo-app-backend-org/app-backend
         env:
-        - name: RAILS_LOG_TO_STDOUT
-          value: "1"
+        - name: LOG_UDP_HOST
+          value: "192.168.1.14"
+        - name: LOG_UDP_PORT
+          value: "1514"
         resources:
           requests:
             ephemeral-storage: 5G

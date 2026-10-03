@@ -1,6 +1,6 @@
 ---
 # Overrides for the grafana/alloy chart (1.13.x): ship every pod's logs to
-# Loki, and accept syslog over UDP (port 1514) from the Rails apps.
+# Loki, and accept syslog over UDP (port 1514): the Rails apps log only there.
 alloy:
   configMap:
     content: |
@@ -41,7 +41,20 @@ alloy:
           syslog_format  = "rfc3164"
           labels         = { job = "syslog" }
         }
-        forward_to = [loki.write.default.receiver]
+        relabel_rules = loki.relabel.syslog.rules
+        forward_to    = [loki.write.default.receiver]
+      }
+
+      loki.relabel "syslog" {
+        forward_to = []
+        rule {
+          source_labels = ["__syslog_message_app_name"]
+          target_label  = "app"
+        }
+        rule {
+          source_labels = ["__syslog_message_hostname"]
+          target_label  = "pod"
+        }
       }
 
       loki.write "default" {
