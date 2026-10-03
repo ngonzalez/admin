@@ -28,12 +28,12 @@ customLabels: {}
 securityContext: {}
 
 # Additional Environment variables
-env: {}
-# - name: REDIS_PASSWORD
-#   valueFrom:
-#     secretKeyRef:
-#       key: redis-password
-#       name: redis-config-0.0.2
+env:
+  - name: REDIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: REDIS_PASSWORD
+        name: redis-env
 service:
   type: ClusterIP
   port: 9121

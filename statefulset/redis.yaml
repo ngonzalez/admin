@@ -16,6 +16,9 @@ spec:
       containers:
       - name: redis
         image: registry.gitlab.com/ngonzalez121/demo-app-database-org/redis
+        envFrom:
+          - secretRef:
+              name: redis-env
         resources:
           requests:
             memory: "500M"
