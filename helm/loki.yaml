@@ -4,6 +4,9 @@
 deploymentMode: SingleBinary
 
 loki:
+  # the chart's default tag lags behind its appVersion
+  image:
+    tag: 3.6.12
   auth_enabled: false
   commonConfig:
     replication_factor: 1
@@ -26,6 +29,12 @@ loki:
 
 singleBinary:
   replicas: 1
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
   persistence:
     enabled: true
     storageClass: manual
@@ -38,8 +47,24 @@ write:
 backend:
   replicas: 0
 
+# The gateway is the only way in from outside the cluster (externalIP, port
+# 3100) and asks for a login. Alloy and Grafana use loki.development.svc:3100
+# inside the cluster, without it. The htpasswd lives in the loki-gateway-auth
+# secret (created outside git, from ~/.config/loki-credentials).
 gateway:
-  enabled: false
+  enabled: true
+  replicas: 1
+  basicAuth:
+    enabled: true
+    existingSecret: loki-gateway-auth
+  service:
+    port: 3100
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
 chunksCache:
   enabled: false
 resultsCache:
@@ -48,3 +73,7 @@ lokiCanary:
   enabled: false
 test:
   enabled: false
+# No ConfigMap carries the loki_rule label: the rules sidecar only used memory
+sidecar:
+  rules:
+    enabled: false
