@@ -7,7 +7,7 @@ SERVICE ?=
 SINCE ?= 10m
 TAIL ?= 200
 FILTER ?=
-FOLLOW ?=
+FOLLOW ?= true
 ANSIBLE_DIR ?= ../ansible
 
 KUBECTL = ssh $(NODE) kubectl -n $(NAMESPACE)
