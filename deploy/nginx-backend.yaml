@@ -28,6 +28,15 @@ spec:
           containerPort: 4040
         - name: nginx-status
           containerPort: 2222
+        volumeMounts:
+        - name: tls
+          mountPath: /etc/ssl/tls
+          readOnly: true
+      volumes:
+      - name: tls
+        secret:
+          secretName: link12-ddns-net-tls
+          defaultMode: 0400
       dnsConfig:
         nameservers:
           - 8.8.8.8
