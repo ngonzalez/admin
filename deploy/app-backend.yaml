@@ -5,6 +5,9 @@ metadata:
   name: app-backend
   namespace: development
 spec:
+  # hostPort on a single node: the old pod must stop before the new one can start
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       run: app-backend
