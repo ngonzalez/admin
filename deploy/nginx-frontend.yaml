@@ -30,18 +30,19 @@ spec:
           containerPort: 443
         - name: nginx-status
           containerPort: 2220
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 3
-          timeoutSeconds: 1
+        # ready once nginx accepts TLS connections. An HTTP probe follows the
+        # port 80 redirect to https://<pod IP>/, which nginx refuses: it only
+        # answers requests for the site's name
         readinessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 3
-          timeoutSeconds: 1
+          tcpSocket:
+            port: https
+          initialDelaySeconds: 2
+          periodSeconds: 5
+        livenessProbe:
+          tcpSocket:
+            port: https
+          initialDelaySeconds: 10
+          periodSeconds: 10
         volumeMounts:
         - name: ephemeral
           mountPath: /tmp
