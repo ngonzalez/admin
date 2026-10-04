@@ -8,6 +8,9 @@ metadata:
     app: postgresql
 spec:
   type: NodePort
+  # keep the real client address: with Cluster, kube-proxy rewrites it to the
+  # node's, so pg_hba.conf could not tell the LAN from the internet
+  externalTrafficPolicy: Local
   ports:
     - port: 5432
   selector:
