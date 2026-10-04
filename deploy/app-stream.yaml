@@ -59,6 +59,12 @@ spec:
       - name: ephemeral
         emptyDir:
           sizeLimit: 2G
+      # link12.ddns.net has no public DNS record when the No-IP hostname
+      # lapses: resolve it to the node, like /etc/hosts on the server
+      hostAliases:
+      - ip: "192.168.1.14"
+        hostnames:
+        - link12.ddns.net
       dnsConfig:
         nameservers:
           - 8.8.8.8
