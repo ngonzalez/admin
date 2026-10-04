@@ -17,7 +17,8 @@ KUBECTL = ssh $(NODE) kubectl -n $(NAMESPACE)
 help: ## List the targets
 	@echo "admin: make <target> [VAR=value]"
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | sed -E 's/:.*## /\t/' | expand -t 16 | sed 's/^/  /'
-	@echo "  setup, deploy: TAGS=<tags from make ansible-tags, comma-separated> or TAGS=all"
+	@echo "  setup: TAGS=<tags from make ansible-tags, comma-separated> or TAGS=all"
+	@echo "  deploy: TAGS=<tags from make ansible-tags, comma-separated>, or nothing to deploy everything"
 	@echo "  ansible-dry-run: TAGS=<setup tags, e.g. firewall>"
 	@echo "  logs: SERVICE=<name from make services> SINCE=$(SINCE) TAIL=$(TAIL) FOLLOW=1 FILTER=regexp"
 .PHONY: help
@@ -77,6 +78,6 @@ setup: ## Configure the node with ansible's setup.yml (TAGS required)
 	@$(ANSIBLE) setup
 .PHONY: setup
 
-deploy: ## Deploy to the cluster with ansible's deploy.yml (TAGS required)
+deploy: ## Deploy to the cluster with ansible's deploy.yml (all projects, or TAGS)
 	@$(ANSIBLE) deploy
 .PHONY: deploy
