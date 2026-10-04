@@ -5,9 +5,6 @@ metadata:
   name: app-showcase
   namespace: development
 spec:
-  # hostPort on a single node: the old pod must stop before the new one can start
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       run: app-showcase
@@ -37,7 +34,6 @@ spec:
         ports:
         - name: puma
           containerPort: 6000
-          hostPort: 6000
         startupProbe:
           httpGet:
             path: /_health
