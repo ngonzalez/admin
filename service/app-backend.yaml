@@ -5,7 +5,8 @@ metadata:
   name: app-backend-loadbalancer
   namespace: development
 spec:
-  type: LoadBalancer
+  # only nginx, inside the cluster, talks to Puma
+  type: ClusterIP
   selector:
     run: app-backend
   ports:
