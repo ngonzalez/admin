@@ -20,19 +20,19 @@ help: ## List the targets
 	@echo "  setup, deploy: TAGS=<tags from make ansible-tags, comma-separated>, or nothing for everything"
 	@echo "  (a plain make setup includes the kube role: it rebuilds the cluster)"
 	@echo "  ansible-dry-run: TAGS=<setup tags, e.g. firewall>"
-	@echo "  logs: SERVICE=<name from make services> SINCE=$(SINCE) TAIL=$(TAIL) FOLLOW=1 FILTER=regexp"
+	@echo "  logs: SERVICE=<name from make services> SINCE=$(SINCE) TAIL=$(TAIL) FOLLOW= (no streaming) FILTER=regexp"
 .PHONY: help
 
 services: ## List the deployments and statefulsets (the SERVICE names)
 	@$(KUBECTL) get deploy,sts -o name | sed -E 's|^[a-z.]+/||' | sort
 .PHONY: services
 
-logs: ## Read a service's logs (all its containers; FOLLOW=1 to stream)
+logs: ## Read a service's logs (all its containers; streams until Ctrl-C, FOLLOW= to stop)
 	@[ -n "$(SERVICE)" ] || { echo "SERVICE is required, one of:"; $(MAKE) -s services | sed 's/^/  /'; exit 1; }
 	@ssh $(NODE) 'r=$$(kubectl -n $(NAMESPACE) get deploy,sts -o name | grep -E "^[a-z.]+/$(SERVICE)$$"); \
 		[ -n "$$r" ] || { echo "no deployment or statefulset named $(SERVICE)"; exit 1; }; \
 		kubectl -n $(NAMESPACE) logs "$$r" --all-containers --prefix --timestamps --since=$(SINCE) --tail=$(TAIL) $(if $(FOLLOW),--follow)' \
-		$(if $(FILTER),| { grep -E --line-buffered '$(FILTER)' || true; })
+		$(if $(FILTER),| { grep -iE --line-buffered '$(FILTER)' || true; })
 .PHONY: logs
 
 pods: ## Show the pods: ready, restarts, age
