@@ -28,6 +28,17 @@ spec:
           containerPort: 5050
         - name: nginx-status
           containerPort: 2221
+        # ready once nginx accepts TLS connections: rollout status then means "serving"
+        readinessProbe:
+          tcpSocket:
+            port: https
+          initialDelaySeconds: 2
+          periodSeconds: 5
+        livenessProbe:
+          tcpSocket:
+            port: https
+          initialDelaySeconds: 10
+          periodSeconds: 10
         volumeMounts:
         - name: tls
           mountPath: /etc/ssl/tls
