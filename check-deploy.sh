@@ -6,14 +6,14 @@
 #   4. no errors in the app, nginx, PostgreSQL and Redis logs since the deploy
 #
 # usage: ./check-deploy.sh [SINCE]   (default 10m: how far back to look for restarts and errors)
-# needs: ssh access to the node, curl, logcli
+# needs: ssh access to the node, curl, python3
 set -uo pipefail
 
 SINCE=${1:-10m}
 NODE=${NODE:-root@192.168.1.14}
 NAMESPACE=${NAMESPACE:-development}
 DOMAIN=${DOMAIN:-link12.ddns.net}
-export LOKI_ADDR=${LOKI_ADDR:-http://192.168.1.14:3100}
+LOKI_ADDR=${LOKI_ADDR:-http://192.168.1.14:3100}
 # frontend, backend, stream, showcase
 ENDPOINTS=(443 4040/_health 5050 6060)
 ERRORS='(?i)(error|fatal|exception|panic|refused|timed? ?out|\[(crit|alert|emerg)\])'
@@ -58,8 +58,21 @@ for e in "${ENDPOINTS[@]}"; do
 done
 
 echo "logs (last $SINCE)"
+# Loki's HTTP API with curl: logcli can be denied local network access by macOS
+start=$(( ($(date +%s) - since_s) * 1000000000 ))
 for stream in '{job="syslog", app=~"app-.+"}' '{namespace="'"$NAMESPACE"'", container=~"nginx-.+|postgresql|redis|app-.+"}'; do
-  hits=$(logcli query --quiet --output=default --since="$SINCE" --limit=20 "$stream |~ \`$ERRORS\` !~ \`$IGNORE\`" 2>&1)
+  if ! json=$(curl -sS -m 20 -G "$LOKI_ADDR/loki/api/v1/query_range" --data-urlencode "start=$start" --data-urlencode limit=20 \
+      --data-urlencode "query=$stream |~ \`$ERRORS\` !~ \`$IGNORE\`" 2>&1); then
+    fail "$stream: Loki unreachable ($json)"; continue
+  fi
+  hits=$(python3 -c '
+import json, sys, datetime
+d = json.load(sys.stdin)
+if d.get("status") != "success": print("query failed:", d); sys.exit()
+lines = sorted((int(ts), line) for r in d["data"]["result"] for ts, line in r["values"])
+for ts, line in lines[-20:]:
+    print(datetime.datetime.fromtimestamp(ts / 1e9).strftime("%H:%M:%S"), line)
+' <<< "$json" 2>&1)
   if [ -z "$hits" ]; then ok "$stream"; else fail "$stream:"; sed 's/^/          /' <<< "$hits" | cut -c1-220; fi
 done
 
