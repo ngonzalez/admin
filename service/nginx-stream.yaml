@@ -6,6 +6,9 @@ metadata:
   namespace: development
 spec:
   type: LoadBalancer
+  # keep the real client address: with Cluster, kube-proxy rewrites it to the
+  # node's, so nginx and the apps logged every visitor as 192.168.1.14
+  externalTrafficPolicy: Local
   selector:
     run: nginx-stream
   ports:
