@@ -9,8 +9,6 @@ TAIL ?= 200
 FILTER ?=
 FOLLOW ?=
 ANSIBLE_DIR ?= ../ansible
-TAGS ?=
-CONFIRM ?=
 
 KUBECTL = ssh $(NODE) kubectl -n $(NAMESPACE)
 
@@ -48,41 +46,37 @@ check: ## Check the last deploy: rollouts, pods, endpoints, log errors (SINCE)
 	@./check-deploy.sh $(SINCE)
 .PHONY: check
 
+# The ansible targets live in the ansible repository's Makefile
+ANSIBLE = $(MAKE) -s -C $(ANSIBLE_DIR)
+
 ansible-test: ## Test the ansible repo: syntax, lint, role tests (no node needed)
-	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory.yaml setup.yml deploy.yml --syntax-check
-	@cd $(ANSIBLE_DIR) && ansible-lint
-	@cd $(ANSIBLE_DIR) && for t in tests/*.yml; do ansible-playbook "$$t" || exit 1; done
+	@$(ANSIBLE) test
 .PHONY: ansible-test
 
 ansible-dry-run: ## Show what setup.yml would change on the node (--check --diff)
-	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory.yaml setup.yml --check --diff $(if $(TAGS),--tags $(TAGS))
+	@$(ANSIBLE) dry-run
 .PHONY: ansible-dry-run
 
 ansible-install: ## Install ansible and ansible-lint (ansible/requirements.txt) with pyenv
-	@cd $(ANSIBLE_DIR) && pyenv install -s $$(cat .python-version) && python -m pip install -q -r requirements.txt && ansible --version | head -1
+	@$(ANSIBLE) install
 .PHONY: ansible-install
 
 ansible-ping: ## Check that ansible reaches the node
-	@cd $(ANSIBLE_DIR) && ansible -i inventory.yaml all -m ping
+	@$(ANSIBLE) ping
 .PHONY: ansible-ping
 
 ansible-facts: ## Show the facts ansible gathers on the node
-	@cd $(ANSIBLE_DIR) && ansible -i inventory.yaml all -m ansible.builtin.setup
+	@$(ANSIBLE) facts
 .PHONY: ansible-facts
 
 ansible-tags: ## List the TAGS that setup and deploy accept
-	@cd $(ANSIBLE_DIR) && for p in setup deploy; do \
-		printf '%-8s' "$$p:"; ansible-playbook -i inventory.yaml $$p.yml --list-tags 2>/dev/null | sed -n 's/.*TASK TAGS: \[\(.*\)\]/\1/p' | tr -d ' ' | tr ',' '\n' | grep -vxE 'always|never' | paste -sd' ' -; done
+	@$(ANSIBLE) tags
 .PHONY: ansible-tags
 
-# The kube role runs `kubeadm reset -f` before `kubeadm init`: it rebuilds the cluster
 setup: ## Configure the node with ansible's setup.yml (TAGS required)
-	@[ -n "$(TAGS)" ] || { echo "TAGS is required (TAGS=all runs every role):"; $(MAKE) -s ansible-tags | grep '^setup'; exit 1; }
-	@case ",$(TAGS)," in *,all,*|*,kubernetes,*) [ "$(CONFIRM)" = 1 ] || { echo "TAGS=$(TAGS) runs the kube role, which resets the cluster (kubeadm reset -f) and builds a new one: add CONFIRM=1 to go ahead"; exit 1; };; esac
-	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory.yaml setup.yml --diff $(if $(filter all,$(TAGS)),,--tags $(TAGS))
+	@$(ANSIBLE) setup
 .PHONY: setup
 
 deploy: ## Deploy to the cluster with ansible's deploy.yml (TAGS required)
-	@[ -n "$(TAGS)" ] || { echo "TAGS is required (TAGS=all deploys everything):"; $(MAKE) -s ansible-tags | grep '^deploy'; exit 1; }
-	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory.yaml deploy.yml --diff $(if $(filter all,$(TAGS)),,--tags $(TAGS))
+	@$(ANSIBLE) deploy
 .PHONY: deploy
