@@ -13,10 +13,72 @@ spec:
       labels:
         app: postgresql
     spec:
+      terminationGracePeriodSeconds: 60
       containers:
         - name: postgresql
           image: postgres:17
           imagePullPolicy: IfNotPresent
+          # same tuning as demo-app-database's postgresql.conf (2 GB / 2 CPU on SSD)
+          args:
+            - postgres
+            - -c
+            - shared_buffers=512MB
+            - -c
+            - effective_cache_size=1536MB
+            - -c
+            - work_mem=16MB
+            - -c
+            - maintenance_work_mem=128MB
+            - -c
+            - random_page_cost=1.1
+            - -c
+            - effective_io_concurrency=200
+            - -c
+            - maintenance_io_concurrency=200
+            - -c
+            - max_worker_processes=4
+            - -c
+            - max_parallel_workers=2
+            - -c
+            - max_parallel_workers_per_gather=1
+            - -c
+            - max_parallel_maintenance_workers=1
+            - -c
+            - wal_compression=lz4
+            - -c
+            - wal_buffers=16MB
+            - -c
+            - max_wal_size=2GB
+            - -c
+            - min_wal_size=256MB
+            - -c
+            - checkpoint_completion_target=0.9
+            - -c
+            - jit=off
+            - -c
+            - autovacuum_vacuum_scale_factor=0.05
+            - -c
+            - idle_in_transaction_session_timeout=5min
+            - -c
+            - log_min_duration_statement=500ms
+            - -c
+            - log_autovacuum_min_duration=1s
+            - -c
+            - log_checkpoints=on
+            - -c
+            - log_lock_waits=on
+            - -c
+            - log_temp_files=0
+            - -c
+            - track_io_timing=on
+            - -c
+            - shared_preload_libraries=pg_stat_statements
+          # SIGTERM waits for every client to disconnect, and the apps keep theirs open:
+          # stop with a fast shutdown so the pod isn't killed mid-checkpoint
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "gosu postgres pg_ctl -D \"$PGDATA\" -m fast -w -t 50 stop"]
           resources:
             requests:
               memory: 500M
