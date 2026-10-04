@@ -14,8 +14,11 @@ NODE=${NODE:-root@192.168.1.14}
 NAMESPACE=${NAMESPACE:-development}
 DOMAIN=${DOMAIN:-link12.ddns.net}
 LOKI_ADDR=${LOKI_ADDR:-http://192.168.1.14:3100}
-# frontend, backend, stream, showcase
-ENDPOINTS=(443 4040/_health 5050 6060)
+# Loki's gateway asks for a login: user:password, one line
+LOKI_CREDENTIALS=${LOKI_CREDENTIALS:-$HOME/.config/loki-credentials}
+# frontend (static files: its page), then backend, stream and showcase: their
+# health check goes through nginx and Rails to PostgreSQL
+ENDPOINTS=(443 4040/_health 5050/_health 6060/_health)
 ERRORS='(?i)(error|fatal|exception|panic|refused|timed? ?out|\[(crit|alert|emerg)\])'
 # expected: the fast shutdown of a planned PostgreSQL restart disconnects its clients
 IGNORE='terminating connection due to administrator command'
@@ -59,9 +62,11 @@ done
 
 echo "logs (last $SINCE)"
 # Loki's HTTP API with curl: logcli can be denied local network access by macOS
+loki_login=$(cat "$LOKI_CREDENTIALS" 2>/dev/null) || fail "no Loki login in $LOKI_CREDENTIALS (user:password)"
 start=$(( ($(date +%s) - since_s) * 1000000000 ))
 for stream in '{job="syslog", app=~"app-.+"}' '{namespace="'"$NAMESPACE"'", container=~"nginx-.+|postgresql|redis|app-.+"}'; do
-  if ! json=$(curl -sS -m 20 -G "$LOKI_ADDR/loki/api/v1/query_range" --data-urlencode "start=$start" --data-urlencode limit=20 \
+  [ -n "${loki_login:-}" ] || break
+  if ! json=$(curl -sS --fail-with-body -m 20 -u "$loki_login" -G "$LOKI_ADDR/loki/api/v1/query_range" --data-urlencode "start=$start" --data-urlencode limit=20 \
       --data-urlencode "query=$stream |~ \`$ERRORS\` !~ \`$IGNORE\`" 2>&1); then
     fail "$stream: Loki unreachable ($json)"; continue
   fi
