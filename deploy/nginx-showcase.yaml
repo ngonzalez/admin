@@ -17,12 +17,12 @@ spec:
       - name: nginx-showcase
         image: registry.gitlab.com/ngonzalez121/demo-app-showcase-org/nginx-showcase
         resources:
+          # no CPU limit, so TLS handshakes are never throttled
           requests:
-            memory: "500M"
-            cpu: "0.5"
+            cpu: 100m
+            memory: 128Mi
           limits:
-            memory: "2G"
-            cpu: "2"
+            memory: 256Mi
         ports:
         - name: https
           containerPort: 6060

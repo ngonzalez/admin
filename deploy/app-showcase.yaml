@@ -25,14 +25,15 @@ spec:
         - name: LOG_UDP_PORT
           value: "1514"
         resources:
+          # no CPU limit: CFS throttling adds latency to Ruby requests; the request
+          # guarantees the share, and the node (20 CPUs) can absorb bursts
           requests:
-            ephemeral-storage: 5G
-            memory: 5G
-            cpu: 0.5
+            cpu: "1"
+            memory: 1Gi
+            ephemeral-storage: 2G
           limits:
-            ephemeral-storage: 20G
-            memory: 20G
-            cpu: 4
+            memory: 2Gi
+            ephemeral-storage: 10G
         ports:
         - name: puma
           containerPort: 6000

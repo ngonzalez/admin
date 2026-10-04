@@ -80,12 +80,14 @@ spec:
               exec:
                 command: ["sh", "-c", "gosu postgres pg_ctl -D \"$PGDATA\" -m fast -w -t 50 stop"]
           resources:
+            # Guaranteed QoS (requests = limits): evicted last, never CPU-starved.
+            # postgresql.conf/args are sized for 2 GB: raise both together
             requests:
-              memory: 500M
-              cpu: 0.5
+              cpu: "2"
+              memory: 2Gi
             limits:
-              memory: 2G
-              cpu: 2
+              cpu: "2"
+              memory: 2Gi
           ports:
             - containerPort: 5432
           envFrom:
