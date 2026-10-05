@@ -12,13 +12,14 @@ set -uo pipefail
 SINCE=${1:-10m}
 NODE=${NODE:-root@192.168.1.14}
 NAMESPACE=${NAMESPACE:-development}
-DOMAIN=${DOMAIN:-link12.ddns.net}
+DOMAIN=${DOMAIN:-appshare.site}
 LOKI_ADDR=${LOKI_ADDR:-http://192.168.1.14:3100}
 # Loki's gateway asks for a login: user:password, one line
 LOKI_CREDENTIALS=${LOKI_CREDENTIALS:-$HOME/.config/loki-credentials}
 # frontend (static files: its page), then backend, stream and showcase: their
-# health check goes through nginx and Rails to PostgreSQL
-ENDPOINTS=(443 4040/_health 5050/_health 6060/_health)
+# health check goes through Cloudflare, nginx-frontend's SNI router, the app's
+# nginx and Rails to PostgreSQL
+ENDPOINTS=("$DOMAIN/" "api.$DOMAIN/_health" "stream.$DOMAIN/_health" "register.$DOMAIN/_health")
 ERRORS='(?i)(error|fatal|exception|panic|refused|timed? ?out|\[(crit|alert|emerg)\])'
 # expected: the fast shutdown of a planned PostgreSQL restart disconnects its clients
 IGNORE='terminating connection due to administrator command'
@@ -55,7 +56,7 @@ rm -f /tmp/check-deploy-pods.$$
 
 echo "endpoints"
 for e in "${ENDPOINTS[@]}"; do
-  url="https://$DOMAIN:${e%%/*}/${e#*/}"; [ "${e#*/}" = "$e" ] && url="https://$DOMAIN:$e/"
+  url="https://$e"
   read -r code verify <<< "$(curl -s -o /dev/null -m 10 -w '%{http_code} %{ssl_verify_result}' "$url")"
   if [ "$code" = 200 ] && [ "$verify" = 0 ]; then ok "$url"; else fail "$url: HTTP $code, certificate check $verify"; fi
 done
