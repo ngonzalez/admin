@@ -49,7 +49,10 @@ for p in json.load(sys.stdin)["items"]:
         cname = c["name"]
         if not c.get("ready"): problems.append(cname + " not ready")
         last = c.get("lastState", {}).get("terminated")
-        if last and (now - datetime.datetime.fromisoformat(last["finishedAt"].replace("Z", "+00:00"))).total_seconds() < since:
+        # a container lost with its node (ContainerStatusUnknown) has no
+        # finishedAt: the start time of the current one dates the restart then
+        when = last and (last.get("finishedAt") or c.get("state", {}).get("running", {}).get("startedAt"))
+        if when and (now - datetime.datetime.fromisoformat(when.replace("Z", "+00:00"))).total_seconds() < since:
             problems.append(cname + " restarted (" + str(last.get("reason")) + ")")
     print(("FAIL " + name + ": " + ", ".join(problems)) if problems else ("ok " + name))
 ' "$since_s" > /tmp/check-deploy-pods.$$
