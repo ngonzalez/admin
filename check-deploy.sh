@@ -3,7 +3,9 @@
 #   1. every deployment / statefulset in the namespace finished its rollout
 #   2. every pod is ready and none restarted since the deploy
 #   3. the public HTTPS endpoints answer 200 with a valid certificate
-#   4. no errors in the app, nginx, PostgreSQL and Redis logs since the deploy
+#   4. an account's site works: its page, its account lookup (and CORS), and
+#      the register form's subdomain check
+#   5. no errors in the app, nginx, PostgreSQL and Redis logs since the deploy
 #
 # usage: ./check-deploy.sh [SINCE]   (default 10m: how far back to look for restarts and errors)
 # needs: ssh access to the node, curl, python3
@@ -13,6 +15,8 @@ SINCE=${1:-10m}
 NODE=${NODE:-root@192.168.1.14}
 NAMESPACE=${NAMESPACE:-development}
 DOMAIN=${DOMAIN:-appshare.site}
+# an existing account's subdomain, for the account site checks
+SUBDOMAIN=${SUBDOMAIN:-ngonzalez}
 LOKI_ADDR=${LOKI_ADDR:-http://192.168.1.14:3100}
 # Loki's gateway asks for a login: user:password, one line
 LOKI_CREDENTIALS=${LOKI_CREDENTIALS:-$HOME/.config/loki-credentials}
@@ -60,6 +64,28 @@ for e in "${ENDPOINTS[@]}"; do
   read -r code verify <<< "$(curl -s -o /dev/null -m 10 -w '%{http_code} %{ssl_verify_result}' "$url")"
   if [ "$code" = 200 ] && [ "$verify" = 0 ]; then ok "$url"; else fail "$url: HTTP $code, certificate check $verify"; fi
 done
+
+echo "subdomains"
+site="https://$SUBDOMAIN.$DOMAIN"
+code=$(curl -s -o /dev/null -m 10 -w '%{http_code}' "$site/")
+if [ "$code" = 200 ]; then ok "$site/"; else fail "$site/: HTTP $code"; fi
+# the lookup the site's page makes when it starts, from its origin
+query='{"operationName":"getAccount","query":"mutation getAccount($subdomain: String) { getAccount(input: {subdomain: $subdomain}) { account { attributes } errors } }","variables":{"subdomain":"'"$SUBDOMAIN"'"}}'
+headers=$(mktemp); body=$(mktemp)
+curl -s -m 10 -D "$headers" -o "$body" -H 'Content-Type: application/json' -H "Origin: $site" -d "$query" "https://api.$DOMAIN/graphql"
+found=$(python3 -c 'import json, sys; print(json.load(sys.stdin)["data"]["getAccount"]["account"]["attributes"]["subdomain"])' < "$body" 2>/dev/null)
+if ! grep -qi "^access-control-allow-origin: $site" "$headers"; then
+  fail "getAccount: the API doesn't allow $site (CORS)"
+elif [ "$found" = "$SUBDOMAIN" ]; then
+  ok "getAccount finds $SUBDOMAIN"
+else
+  fail "getAccount doesn't find $SUBDOMAIN: $(head -c 200 "$body")"
+fi
+rm -f "$headers" "$body"
+# showcase asks the backend with its registration token: a free name is available
+name="check-deploy-$(openssl rand -hex 4)"
+status=$(curl -s -m 10 "https://register.$DOMAIN/subdomain_availability?name=$name" | python3 -c 'import json, sys; print(json.load(sys.stdin)["status"])' 2>/dev/null)
+if [ "$status" = available ]; then ok "register: subdomain check"; else fail "register: subdomain check answered '${status:-no JSON}' for $name"; fi
 
 echo "logs (last $SINCE)"
 # Loki's HTTP API with curl: logcli can be denied local network access by macOS
