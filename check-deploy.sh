@@ -4,7 +4,7 @@
 #   2. every pod is ready and none restarted since the deploy
 #   3. the public HTTPS endpoints answer 200 with a valid certificate
 #   4. an account's site works: its page, its account lookup (and CORS), and
-#      the register form's subdomain check
+#      the register form's verification by the backend
 #   5. no errors in the app, nginx, PostgreSQL and Redis logs since the deploy
 #
 # usage: ./check-deploy.sh [SINCE]   (default 10m: how far back to look for restarts and errors)
@@ -85,10 +85,21 @@ else
   fail "getAccount doesn't find $SUBDOMAIN: $(head -c 200 "$body")"
 fi
 rm -f "$headers" "$body"
-# showcase asks the backend with its registration token: a free name is available
-name="check-deploy-$(openssl rand -hex 4)"
-status=$(curl -s -m 10 "https://register.$DOMAIN/subdomain_availability?name=$name" | python3 -c 'import json, sys; print(json.load(sys.stdin)["status"])' 2>/dev/null)
-if [ "$status" = available ]; then ok "register: subdomain check"; else fail "register: subdomain check answered '${status:-no JSON}' for $name"; fi
+# the register form, sent as a browser does: showcase asks the backend to
+# verify the details with its registration token (the backend saves
+# nothing at this step). A redirect to /validate means the backend answered,
+# a 502 that it refused the token or couldn't be reached
+jar=$(mktemp); page=$(mktemp)
+curl -s -m 10 -c "$jar" -o "$page" "https://register.$DOMAIN/register"
+csrf=$(grep -o 'name="authenticity_token" value="[^"]*"' "$page" | head -1 | sed 's/.*value="//; s/"$//')
+answer=$(curl -s -m 15 -b "$jar" -o /dev/null -w '%{http_code} %{redirect_url}' "https://register.$DOMAIN/verify_email_address" \
+  --data-urlencode "authenticity_token=$csrf" --data-urlencode "user[accountType]=person" \
+  --data-urlencode "user[subdomain]=check-deploy-$(openssl rand -hex 4)" --data-urlencode "user[emailAddress]=check-deploy")
+case "$answer" in
+  "302 https://register.$DOMAIN/validate"*) ok "register: the backend verifies the form" ;;
+  *) fail "register: verify_email_address answered ${answer:-nothing}" ;;
+esac
+rm -f "$jar" "$page"
 
 echo "logs (last $SINCE)"
 # Loki's HTTP API with curl: logcli can be denied local network access by macOS
