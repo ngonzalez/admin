@@ -23,6 +23,10 @@ loki:
           period: 24h
   limits_config:
     retention_period: 720h
+  # a live tail (make logs without SINCE) ends after this: Loki's default
+  # is 1h ("reached tail max duration limit")
+  querier:
+    tail_max_duration: 168h
   compactor:
     retention_enabled: true
     delete_request_store: filesystem
