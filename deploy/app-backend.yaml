@@ -30,7 +30,8 @@ spec:
             ephemeral-storage: 2G
           limits:
             memory: 2Gi
-            ephemeral-storage: 10G
+            # /tmp (12G) + logs and the writable layer
+            ephemeral-storage: 15G
         ports:
         - name: puma
           containerPort: 4000
@@ -57,8 +58,10 @@ spec:
         secret:
           secretName: app-backend-env
       - name: ephemeral
+        # DirectUploadWorker downloads each uploaded file here to check it
+        # (up to 5000 MiB each): room for two at once
         emptyDir:
-          sizeLimit: 2G
+          sizeLimit: 12G
       dnsConfig:
         nameservers:
           - 8.8.8.8
