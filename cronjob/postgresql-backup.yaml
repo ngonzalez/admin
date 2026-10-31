@@ -1,0 +1,90 @@
+---
+# Nightly backup of the appshare database (and the roles):
+# 1. dump: pg_dump into /data/backups/postgresql on the node, kept 14 days
+# 2. upload: the same files to the Azure `backup` container (Cool tier),
+#    with a write-only SAS (secret postgresql-backup-azure: URL = container
+#    URL, SAS = token without the "?"); Azure deletes them after 30 days
+# Restore: pg_restore -h ... -U postgres -d appshare --clean --if-exists <file>.dump
+# Run now: kubectl -n development create job --from=cronjob/postgresql-backup postgresql-backup-manual
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgresql-backup
+  namespace: development
+spec:
+  schedule: "30 3 * * *"
+  timeZone: Europe/Paris
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 1800
+      template:
+        spec:
+          restartPolicy: Never
+          initContainers:
+            - name: dump
+              image: postgres:17
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: PGHOST
+                  value: postgresql-svc
+                - name: PGUSER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: postgresql-env
+                      key: POSTGRES_USER
+                - name: PGPASSWORD
+                  valueFrom:
+                    configMapKeyRef:
+                      name: postgresql-env
+                      key: POSTGRES_PASSWORD
+              command:
+                - sh
+                - -euc
+                - |
+                  stamp=$(date -u +%Y%m%dT%H%M%SZ)
+                  cd /work
+                  pg_dump -Fc -d appshare -f appshare-$stamp.dump
+                  pg_dumpall --globals-only | gzip > globals-$stamp.sql.gz
+                  # a dump that can't be listed is broken: fail before keeping it
+                  pg_restore --list appshare-$stamp.dump > /dev/null
+                  cp appshare-$stamp.dump globals-$stamp.sql.gz /backups/
+                  find /backups -type f -mtime +13 -delete
+                  ls -l /work
+              volumeMounts:
+                - name: work
+                  mountPath: /work
+                - name: backups
+                  mountPath: /backups
+          containers:
+            - name: upload
+              image: curlimages/curl:8.11.1
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: postgresql-backup-azure
+              command:
+                - sh
+                - -euc
+                - |
+                  for file in /work/*; do
+                    curl --fail-with-body -sS -X PUT --upload-file "$file" \
+                      -H "x-ms-blob-type: BlockBlob" -H "x-ms-access-tier: Cool" -H "x-ms-version: 2023-11-03" \
+                      "$URL/postgresql/$(basename "$file")?$SAS"
+                    echo "uploaded $(basename "$file")"
+                  done
+              volumeMounts:
+                - name: work
+                  mountPath: /work
+                  readOnly: true
+          volumes:
+            - name: work
+              emptyDir:
+                sizeLimit: 2G
+            - name: backups
+              hostPath:
+                path: /data/backups/postgresql
+                type: DirectoryOrCreate
